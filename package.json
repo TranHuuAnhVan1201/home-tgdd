@@ -2,6 +2,7 @@
   "name": "prouducts",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://tranhuuanhvan1201.github.io/home-tgdd",
   "dependencies": {
     "@coreui/chartjs": "^2.0.0",
     "@coreui/coreui": "^3.4.0",
