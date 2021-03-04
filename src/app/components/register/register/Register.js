@@ -30,10 +30,11 @@ function Register(props) {
             setRegister(register);
             alert('submit register thanh cong');
             createUser();
+           
         }
-        console.log('ok');
+        
     }
-    console.log(register);
+
     return (
         <div className="container register">
             <form id="from-register" className="form" onSubmit={handleSubmitRegister}>
@@ -58,7 +59,7 @@ function Register(props) {
                 
             </form>
 
-            <div class="group" style={{display: 'none'}}>
+            <div className="group" style={{display: 'none'}}>
                 <Link to="/" className="btn-link">Back</Link>
                 <Link to="/logintest" className="btn-link">Login</Link>
                 

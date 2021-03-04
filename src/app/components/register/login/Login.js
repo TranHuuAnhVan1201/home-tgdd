@@ -13,11 +13,19 @@ function Login(props) {
             .then(res => {
                 const token = res.data.access;
                 let decoded = jwtDecode(token);
-                (decoded.role === 'admin') ? props.history.push('/admin/user') : props.history.push('/carts');
+                if (decoded.role === 'admin') {
+                    props.history.push('/admin/user');
+                    window.setTimeout(window.location.reload.bind(window.location), 10);
+                }
+                if (decoded.role === 'user') {
+                    props.history.push('/carts');
+                    window.setTimeout(window.location.reload.bind(window.location), 10);
+                }
                 localStorage.setItem("token", token);   
             })
             .catch(err => {
                 console.log(err);
+                
             });
         
     };
