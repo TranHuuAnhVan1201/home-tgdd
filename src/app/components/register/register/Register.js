@@ -30,7 +30,6 @@ function Register(props) {
             setRegister(register);
             alert('submit register thanh cong');
             createUser();
-           
         }
         
     }

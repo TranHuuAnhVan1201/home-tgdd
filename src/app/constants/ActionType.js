@@ -1,9 +1,12 @@
+//custommer
 export const ID = 'ID';
 export const GETPRODUCT = 'GETPRODUCT';
 export const ADD_PRODUCT_TO_CART = 'ADD_PRODUCT_TO_CART';
 export const DELETE_CART = 'DELETE_CART';
 export const INCREASE_QUANTITY = 'INCREASE_QUANTITY';
 export const DECREASE_QUANTITY = 'DECREASE_QUANTITY';
+export const TOTAL_PRICE = 'TOTAL_PRICE';
+
 
 //admin
 export const API_URL = 'http://localhost:4333';

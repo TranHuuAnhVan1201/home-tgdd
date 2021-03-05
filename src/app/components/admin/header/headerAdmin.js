@@ -13,6 +13,7 @@ function HeaderAdmin(props) {
     const handleClickLogout = () => {
         localStorage.removeItem('token');
         history.push("/");
+        window.setTimeout(window.location.reload.bind(window.location), 10);
     }
     return (
         <header>

@@ -38,4 +38,10 @@ export const getDecrease_Quantity = (payload) => {
         payload
     };
 };
+export const getTotal_Price = (payload) => {
+    return {
+        type: types.TOTAL_PRICE,
+        payload
+    }
+}
 

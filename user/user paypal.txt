@@ -1,0 +1,7 @@
+person : khách mua.
+sb-nmz6d5292035@personal.example.com
+
+business : chủ shop, chủ.
+sb-zo2ys5292055@business.example.com
+
+Test  === tai khoan doanh nghiep

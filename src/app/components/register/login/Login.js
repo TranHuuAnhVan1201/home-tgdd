@@ -13,12 +13,13 @@ function Login(props) {
             .then(res => {
                 const token = res.data.access;
                 let decoded = jwtDecode(token);
+                alert('submit thanh cong');
                 if (decoded.role === 'admin') {
-                    props.history.push('/admin/user');
+                    history.push('/admin/user');
                     window.setTimeout(window.location.reload.bind(window.location), 10);
                 }
                 if (decoded.role === 'user') {
-                    props.history.push('/carts');
+                    history.push('/carts');
                     window.setTimeout(window.location.reload.bind(window.location), 10);
                 }
                 localStorage.setItem("token", token);   
@@ -52,7 +53,6 @@ function Login(props) {
             setInputs(inputs);
             console.log(inputs);
             loginUser();
-            
         }
     }
 

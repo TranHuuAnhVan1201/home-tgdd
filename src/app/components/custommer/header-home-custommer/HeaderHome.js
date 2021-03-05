@@ -1,12 +1,24 @@
-import React from 'react';
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from "react-router-dom";
 import './scss/Header.scss'
-import * as actions from './../../../actions/custommer/products/Product';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import jwtDecode from 'jwt-decode';
 
 function Header(props) {
     const setNumberCarts = useSelector(state => state.GetCarts);
-
+    const [role, setRole] = useState(null);
+    const history = useHistory();
+    useEffect(() => {
+        if (localStorage.getItem("token")) {
+            var decoded = jwtDecode(localStorage.getItem("token"));
+            setRole(decoded.role);
+        }
+    }, []);
+    const onLogout = () => {
+        localStorage.removeItem("token");
+        history.push("/");
+        window.setTimeout(window.location.reload.bind(window.location), 10);
+    }
     return (
         <header>
             <div className="wrap-main">
@@ -33,8 +45,10 @@ function Header(props) {
                             <li><Link to="/pay">Trả góp</Link></li>
                             <li><Link to="/contact">Liên hệ</Link></li>
                             <li><Link to="/new">Tin tức</Link></li>
-                            <li><Link to="/login">Đăng nhập</Link></li>
-                            <li><Link to="/register">Đăng ký</Link></li>
+                            <li> {(role) ? (<Link to="/Login"> Tên: {role}</Link>) : <Link to="/Login"> Đăng nhập</Link>}</li>
+                            {/* <Link to="/Login"> { (role) ? "Tên: " + role : " Đăng nhập"}</Link>  */}
+                            <li> {(role) ? (<Link onClick={onLogout}> Logout</Link>) : <Link to="/Register"> Đăng ký</Link>}</li>
+
                         </div>
                     </div>
                 </nav>
