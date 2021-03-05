@@ -1,2 +1,0 @@
-(this.webpackJsonpprouducts=this.webpackJsonpprouducts||[]).push([[19],{99:function(t,s,n){"use strict";n.r(s);var c=n(3);n(0),n(114);s.default=function(t){return Object(c.jsxs)("div",{children:[Object(c.jsx)("h1",{children:"login"}),Object(c.jsxs)("button",{type:"button",className:"btn btn-primary",children:["Notifications ",Object(c.jsx)("span",{className:"badge bg-secondary",children:"4"})]}),Object(c.jsx)("button",{type:"button",className:"btn btn-primary",children:"Primary"})]})}}}]);
-//# sourceMappingURL=19.018056d0.chunk.js.map
