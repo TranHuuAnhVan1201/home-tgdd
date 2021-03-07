@@ -1,7 +1,34 @@
 person : khách mua.
 sb-nmz6d5292035@personal.example.com
+First name:
+John
+Last name:
+Doe
+Email ID:
+sb-nmz6d5292035@personal.example.com
+System Generated Password:
+,E?Y8C5t
 
+NGƯỜI THANH TÓAAN
+
+==========================
 business : chủ shop, chủ.
 sb-zo2ys5292055@business.example.com
 
+First name:
+John
+Last name:
+Doe
+Email ID:
+sb-zo2ys5292055@business.example.com
+System Generated Password:
+bn8?3N-H
+
+NGƯỜI NHẬN THANH TOÁN.
+================
 Test  === tai khoan doanh nghiep
+
+=================
+send mail.
+sb-y2n8v5308692@business.example.com
+91P3_wbT

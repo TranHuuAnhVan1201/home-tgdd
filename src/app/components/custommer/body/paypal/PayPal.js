@@ -1,13 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
+
 import './PayPal.scss';
 function PayPal(props) {
     const listCarts = useSelector(state => state.GetCarts);
     const paypal = useRef();
     useEffect(() => {
         window.paypal.Buttons({
-
-            //b2 create order.
             createOrder: (data, actions, err) => {
                 return actions.order.create({
                     intent: "CAPTURE",
@@ -21,18 +20,36 @@ function PayPal(props) {
                     ]
                 })
             },
+            onSuccess: (payment) => {
+                // Congratulation, it came here means everything's fine!
+                console.log("The payment was succeeded!", payment);
+                // You can bind the "payment" object's value to your state or props or whatever here, please see below for sample returned data
+                props.onSuccess(payment);
+
+            },
             onApprove: async (data, actions) => {
                 const order = await actions.order.capture();
                 console.log(order);
+                console.log(data);
+
+                alert('Transaction completed by ' + order.payer.name.given_name);
+                // return actions.order.capture().then(function (details) {
+                //     // This function shows a transaction success message to your buyer.
+                //     alert('Transaction completed by ' + details.payer.name.given_name);
+                // });
+                
             },
             onError: (err) => {
                 console.log(err);
             }
+           
         }).render(paypal.current)
-    },[])
+    }, [])
+    
     return (
         <div className="paypal-av">
             <div ref={paypal}></div>
+
         </div>
     );
 }
