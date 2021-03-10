@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import './PayPal.scss';
 function PayPal(props) {
     const listCarts = useSelector(state => state.GetCarts);
     const paypal = useRef();
+    let history = useHistory();
     useEffect(() => {
         window.paypal.Buttons({
             createOrder: (data, actions, err) => {
@@ -31,13 +33,16 @@ function PayPal(props) {
                 const order = await actions.order.capture();
                 console.log(order);
                 console.log(data);
-
                 alert('Transaction completed by ' + order.payer.name.given_name);
                 // return actions.order.capture().then(function (details) {
                 //     // This function shows a transaction success message to your buyer.
                 //     alert('Transaction completed by ' + details.payer.name.given_name);
                 // });
-                
+                 history.push("/history");
+                 window.setTimeout(
+                   window.location.reload.bind(window.location),
+                   10
+                 );
             },
             onError: (err) => {
                 console.log(err);

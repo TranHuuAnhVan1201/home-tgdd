@@ -1,6 +1,6 @@
 import *as types from './../../../constants/ActionType';
 
-const init = JSON.parse(localStorage.getItem('cart')) || { numberCart: 0, totalPrice: 0, items: [] }
+const init = JSON.parse(localStorage.getItem('cart')) || { numberCart: 0, totalPrice: 0, items: [], bill: 0, userID: 0 }
 
 const removedot = (dot) => {
     return dot.replace(/\./g, "");
@@ -19,8 +19,6 @@ var myReducer = (state = init, action) => {
             localStorage.setItem('cart', JSON.stringify(state));
         }
     }
-        
-    
     switch (action.type) {
         case types.ADD_PRODUCT_TO_CART:
             if (state.numberCart === 0) {
@@ -59,7 +57,6 @@ var myReducer = (state = init, action) => {
                 ...state,
                 numberCart: state.numberCart + 1
             };
-
         case types.INCREASE_QUANTITY:
             state.numberCart++;
             state.items[action.payload].quantity++;
@@ -76,8 +73,7 @@ var myReducer = (state = init, action) => {
             updateTotal();
             return {
                 ...state
-            };
-            
+            };         
         case types.DELETE_CART:
             let quantity_ = state.items[action.payload].quantity;
             state.numberCart -= quantity_;
@@ -94,8 +90,11 @@ var myReducer = (state = init, action) => {
             }
             return {
                 ...state,                
-            };
-
+            };       
+        case types.BILL_ID:
+            return { ...state, bill: action.bill_id }
+        case types.CART_ID:
+            return {...state, userID: action.user_id}
         default:
             updateTotal();
             return state;

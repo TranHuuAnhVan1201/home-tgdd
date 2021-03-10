@@ -44,4 +44,16 @@ export const getTotal_Price = (payload) => {
         payload
     }
 }
+export const getBill_ID = (bill_id) => {
+    return {
+        type: types.BILL_ID,
+        bill_id
+    }
+}
+export const getUSER_ID = (user_id) => {
+    return {
+        type: types.CART_ID,
+        user_id
+    };
+}
 
