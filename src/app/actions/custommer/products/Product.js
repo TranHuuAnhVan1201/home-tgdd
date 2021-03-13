@@ -57,3 +57,17 @@ export const getUSER_ID = (user_id) => {
     };
 }
 
+export const getIMG_ID = (img_id) => {
+    return {
+        type: types.UPIMG_ID,
+        img_id
+    };
+}
+
+export const getPRODUCT_ID = (product_id) => {
+    return {
+        type: types.UPPRODUCT_ID,
+        product_id
+    };
+}
+

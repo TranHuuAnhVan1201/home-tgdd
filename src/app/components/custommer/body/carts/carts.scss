@@ -33,42 +33,55 @@
                 height: 100px;
                 width: 100%;
                 background-color:#F9FAFB;
-            }
                 th {
                     padding: 10px 0;
                     width: calc(100% / 6);
                     text-align: center;
                     border: 1px solid rgba(34,36,38,.1);
                 }
-                th:nth-child(6){
+                  th:nth-child(6){
                     width: 5%;
                 }
-                
-                tbody tr > td {
+                 tbody tr td {
                     min-height: 100px;
                     overflow: hidden;
                     border: 1px solid rgba(34,36,38,.1);
                     padding: 10px;
                     position: relative;
                 }
-                
-                tbody tr > td:nth-child(2) {
+                  tbody tr td:nth-child(2) {
                     text-align: left;
                 }
-                tbody tr > td:nth-child(4),
-                tbody tr > td:nth-child(5) {
+                tbody tr td:nth-child(4),
+                tbody tr td:nth-child(5) {
                     text-align: right;
                 }
-                tbody tr > td.td-group {
+                tbody tr td.td-group {
                     display: flex;
                     flex-direction: row;
                     justify-content: center;
                     align-items: center;             
                 }
-                    tbody tr > td.td-group td {
-                        width: 20%;
-                    }
-
+                tbody tr td.td-group td {
+                    width: 20%;
+                }
+                
+            }
+                tbody tr td:nth-child(4),
+                tbody tr td:nth-child(5) {
+                    padding: 10px;
+                    text-align: right;
+                }
+                td {
+                    border: 1px solid #eee;
+                }
+            table img {
+                max-width: 200px;
+                max-height: 50px;
+            }
+               
+                
+              
             tfoot {
                 height: 100px;
                 width: 100%;

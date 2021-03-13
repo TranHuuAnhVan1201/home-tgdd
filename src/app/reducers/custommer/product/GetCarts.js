@@ -1,24 +1,24 @@
 import *as types from './../../../constants/ActionType';
 
-const init = JSON.parse(localStorage.getItem('cart')) || { numberCart: 0, totalPrice: 0, items: [], bill: 0, userID: 0 }
+const init = JSON.parse(localStorage.getItem('cart')) || { numberCart: 0, totalPrice: 0, items: [], bill: 0, userID: 0, upload: [], imgID: [], productID: 0}
 
-const removedot = (dot) => {
-    return dot.replace(/\./g, "");
-}
 var myReducer = (state = init, action) => {
+    console.log(state);
     const updateTotal = () => {
         let total = 0;
-        if (state.items.length) {
-            for (let i = 0; i < state.items.length; i++) {
-                total += parseInt(removedot(state.items[i].price)) * (state.items[i].quantity || 1);
-            }
-            state.totalPrice = total;
+      if (state.items.length > 0) {
+        for (let i = 0; i < state.items.length; i++) {
+          total +=
+            parseInt(state.items[i].price) *
+            (state.items[i].quantity || 1);
         }
-
-        if (state.items.length !== 0) {
-            localStorage.setItem('cart', JSON.stringify(state));
+        state.totalPrice = total;
+      }
+      if (state.items.length !== 0) {
+        localStorage.setItem("cart", JSON.stringify(state));
         }
-    }
+        return;
+    };
     switch (action.type) {
         case types.ADD_PRODUCT_TO_CART:
             if (state.numberCart === 0) {
@@ -26,6 +26,7 @@ var myReducer = (state = init, action) => {
                     id: action.payload.id,
                     quantity: 1,
                     title: action.payload.title,
+                    name: action.payload.name,
                     url: action.payload.url,
                     price: action.payload.price,
                 }
@@ -42,12 +43,13 @@ var myReducer = (state = init, action) => {
                 })
                 if (!check) {
                     let _cart = {
-                        id: action.payload.id,
-                        quantity: 1,
-                        title: action.payload.title,
-                        url: action.payload.url,
-                        price: action.payload.price,
-                    }
+                      id: action.payload.id,
+                      quantity: 1,
+                      title: action.payload.title,
+                      name: action.payload.name,
+                      url: action.payload.url,
+                      price: action.payload.price,
+                    };
                     state.items.push(_cart);
                 };
 
@@ -94,7 +96,11 @@ var myReducer = (state = init, action) => {
         case types.BILL_ID:
             return { ...state, bill: action.bill_id }
         case types.CART_ID:
-            return {...state, userID: action.user_id}
+            return { ...state, userID: action.user_id }
+        case types.UPIMG_ID:
+            return { ...state, imgID: action.img_id };
+        case types.UPPRODUCT_ID:
+            return { ...state, productID: action.product_id };
         default:
             updateTotal();
             return state;

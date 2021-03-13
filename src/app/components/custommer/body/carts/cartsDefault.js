@@ -36,9 +36,6 @@ function CartsDefault(props) {
       history.push("/login");
     }
   };
-  const removedot = (dot) => {
-    return dot.replace(/\./g, "");
-  };
 
   const formatVND = (str) => {
     if (typeof str !== "string") {
@@ -71,7 +68,7 @@ function CartsDefault(props) {
   // item_carrt trong bills.
   const itemCart = () => {
     listCarts.items.forEach((element) => {
-      let total = parseInt(removedot(element.price)) / 230000;
+      let total = parseInt((element.price)) / 230000;
       let obj = {
         product_id: element.id,
         quantity: element.quantity,
@@ -99,6 +96,7 @@ function CartsDefault(props) {
   };
   console.log(listCarts);
 
+
   return (
     <section>
       <div className="carts">
@@ -122,7 +120,7 @@ function CartsDefault(props) {
                     <td>
                       <img src={value.url} alt={123}></img>
                     </td>
-                    <td>{value.title}</td>
+                    <td>{value.title || value.name}</td>
                     <td className="td-group">
                       <span onClick={() => Decrease_Quantity(key)}>-</span>
                       <span>{value.quantity}</span>
@@ -131,7 +129,7 @@ function CartsDefault(props) {
                     <td>{value.price} đ</td>
                     <td>
                       {formatVND(
-                        parseInt(removedot(value.price)) * (value.quantity || 1)
+                        (parseInt(parseInt(value.price)) * (value.quantity || 1))
                       )}{" "}
                       đ
                     </td>

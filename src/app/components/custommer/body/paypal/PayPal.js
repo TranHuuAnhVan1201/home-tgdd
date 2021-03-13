@@ -39,10 +39,6 @@ function PayPal(props) {
                 //     alert('Transaction completed by ' + details.payer.name.given_name);
                 // });
                  history.push("/history");
-                 window.setTimeout(
-                   window.location.reload.bind(window.location),
-                   10
-                 );
             },
             onError: (err) => {
                 console.log(err);

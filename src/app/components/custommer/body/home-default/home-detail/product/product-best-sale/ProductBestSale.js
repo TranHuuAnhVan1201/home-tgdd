@@ -12,6 +12,7 @@ function convertToSlug(slug) {
 }
 function ProductBestSale(props) {
     const databaseRedux = useSelector(state => state.GetProduct);
+
     const dispatch = useDispatch();
     useEffect(() => {
         onGetProduct();

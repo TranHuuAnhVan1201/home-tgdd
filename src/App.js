@@ -14,6 +14,9 @@ const PayPal = React.lazy(() => import('./app/components/custommer/body/paypal/P
 const Order = React.lazy(() => import('./app/components/custommer/body/paypal/Order'));
 const PageHistory = React.lazy(() => import('./app/components/custommer/body/paypal/history/History'));
 const UpImages = React.lazy(() => import("./app/components/custommer/body/upload-img/UpImages"));
+const Homeasd = React.lazy(() =>
+  import("./app/components/custommer/body/upload-img/Homeasd")
+);
 
 const loading = (
   <div className="pt-3 text-center">
@@ -28,7 +31,7 @@ function App() {
       var decoded = jwtDecode(token);
       setRole(decoded.role);
       if (role === 'admin') {
-        console.log("đúng");
+        console.log("Đã đăng nhập");
       }
     }
   }, []);
@@ -40,18 +43,19 @@ function App() {
             <Route path={"/loginNghia"} exact component={LoginNghiaPage} />
             <Route path={"/login"} exact component={LoginPage} />
             <Route path={"/register"} exact component={Register} />
-            <Route path={"/admin"} component={role === "admin" ? AdminRouter : Page404} />
+            <Route
+              path={"/admin"}
+              component={role === "admin" ? AdminRouter : Page404}
+            />
             <Route path={"/paypal"} component={PayPal} />
             <Route path={"/order"} component={Order} />
             <Route path={"/history"} component={PageHistory} />
             <Route path={"/upimg"} component={UpImages} />
+            <Route path={"/test"} component={Homeasd} />
             <Route path={"/"} component={defaultPage} />
-            
           </Switch>
-          
         </React.Suspense>
       </ScrollToTop>
-      
     </HashRouter>
   );
 }

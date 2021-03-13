@@ -6,22 +6,24 @@ import Need from './home-detail/need/Need';
 import TitlePictures from './home-detail/TitlePictures';
 import ProductBestSale from './home-detail/product/product-best-sale/ProductBestSale';
 import ProductDefault from './home-detail/product/product-default/ProductDefault'
+import ProductDatabase from './home-detail/product/product-database/ProductDatabase';
+
 
 
 
 function homeDefault(props) {
     return (
-        <section>
-            <Banner />
-            <Filter/>
-            <Need/>
-            <TitlePictures />
-            <ProductBestSale/>
-            <FilterLaptop />
-            <ProductDefault/>
-           
-           
-        </section>
+      <section>
+        <Banner />
+        <Filter />
+        <Need />
+        <TitlePictures />
+        <ProductBestSale />
+        <FilterLaptop />
+        <ProductDatabase />
+        <FilterLaptop />
+        <ProductDefault />
+      </section>
     );
 }
 
