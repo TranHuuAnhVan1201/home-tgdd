@@ -7,10 +7,11 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import reportWebVitals from './reportWebVitals';
 import thunk from 'redux-thunk';
 import appReducer from './app/reducers/custommer/index';
+import logger from "redux-logger";
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   appReducer,
-  composeEnhancer(applyMiddleware(thunk))
+  composeEnhancer(applyMiddleware(logger))
 );
 
 ReactDOM.render(

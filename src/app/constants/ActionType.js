@@ -12,6 +12,9 @@ export const CART_ID = "CART_ID";
 //product/
 export const GETPRODUCTTEST = "GETPRODUCTTEST";
 
+//search 
+
+
 //up img
 export const UPIMG_ID = "UPIMG_ID";
 export const UPPRODUCT_ID = "UPPRODUCT_ID";

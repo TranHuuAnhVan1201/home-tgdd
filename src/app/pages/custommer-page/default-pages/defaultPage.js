@@ -7,6 +7,10 @@ const homeDefault = React.lazy(() => import('../../../components/custommer/body/
 const ProductDetail = React.lazy(() => import('../../../components/custommer/body/product-detail/ProductDetail'))
 const cartsDefault = React.lazy(()=> import('../../../components/custommer/body/carts/CartsDefault'))
 const checkoutDefault = React.lazy(()=> import('../../../components/custommer/body/checkout/checkoutDefault'))
+
+const searchProduct = React.lazy(() =>
+  import("../../../components/custommer/body/page-search/search-product/Search")
+);
 function defaultPage() {
     return (
         <HashRouter>
@@ -17,7 +21,9 @@ function defaultPage() {
                         <Route path={"/"} exact component={homeDefault} />
                         <Route path={"/product-detail/:slug.:id"} exact component={ProductDetail} />
                         <Route path={"/carts"}  exact component={cartsDefault} />
-                        <Route path={"/checkout"}  exact component={checkoutDefault} />
+                        <Route path={"/checkout"} exact component={checkoutDefault} />
+                        <Route path={"/search"} exact component={searchProduct} />
+                        
                     </Switch>
                     <FooterHome></FooterHome>
                 </React.Suspense>

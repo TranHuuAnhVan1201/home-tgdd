@@ -97,10 +97,7 @@ var myReducer = (state = init, action) => {
             return { ...state, bill: action.bill_id }
         case types.CART_ID:
             return { ...state, userID: action.user_id }
-        case types.UPIMG_ID:
-            return { ...state, imgID: action.img_id };
-        case types.UPPRODUCT_ID:
-            return { ...state, productID: action.product_id };
+
         default:
             updateTotal();
             return state;

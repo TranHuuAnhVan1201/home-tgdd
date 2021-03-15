@@ -9,21 +9,18 @@ const getProduct = async () => {
   let res = await api
     .get()
     .then((res) => {
-      console.log(res);
-      console.log(productDatabase);
-        productDatabase = res.data.result;
-        return productDatabase;
+      productDatabase = res.data.result;
+      return productDatabase;
     })
     .catch((err) => {
       console.log(err);
     });
 };
-getProduct();
+
 
 var myReducer = (state = productDatabase, action) => {
   switch (action.type) {
-      case types.GETPRODUCTTEST:
-          getProduct();
+    case types.GETPRODUCTTEST:
       return state;
     default:
       return state;

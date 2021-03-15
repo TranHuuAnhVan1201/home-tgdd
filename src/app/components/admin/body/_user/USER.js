@@ -111,12 +111,6 @@ function USER(props) {
 
     return (
         <section className="home-admin">
-            <div className="home-left">
-                <Link to="/">Home</Link>
-                <Link to="/admin/user">USER</Link>
-                <Link to="/admin/product">PRODUCT</Link>
-                <Link to="/admin/category">CATEGORY</Link>
-            </div>
             <div className="home-user home-right">
                 <div className="col-12">
                     <span className="btn add" onClick={handleClickADD}>Thêm tài khoản</span>

@@ -32,10 +32,9 @@ function ProductDatabase(props) {
     };
     getProduct();
   }, []);
-  console.log(database);
+
   const addProduct = (item) => {
     dispatch(actions.addProductToCart(item));
-    console.log(item);
   };
   const getIDName = (item) => {
     dispatch(actions.IDName(item));
@@ -71,7 +70,7 @@ function ProductDatabase(props) {
                           <Link
                             to={
                               "/product-detail/" +
-                              convertToSlug(value.name) +
+                              convertToSlug(`${value.name}`) +
                               "." +
                               value.id
                             }

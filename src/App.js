@@ -14,9 +14,7 @@ const PayPal = React.lazy(() => import('./app/components/custommer/body/paypal/P
 const Order = React.lazy(() => import('./app/components/custommer/body/paypal/Order'));
 const PageHistory = React.lazy(() => import('./app/components/custommer/body/paypal/history/History'));
 const UpImages = React.lazy(() => import("./app/components/custommer/body/upload-img/UpImages"));
-const Homeasd = React.lazy(() =>
-  import("./app/components/custommer/body/upload-img/Homeasd")
-);
+
 
 const loading = (
   <div className="pt-3 text-center">
@@ -51,7 +49,7 @@ function App() {
             <Route path={"/order"} component={Order} />
             <Route path={"/history"} component={PageHistory} />
             <Route path={"/upimg"} component={UpImages} />
-            <Route path={"/test"} component={Homeasd} />
+           
             <Route path={"/"} component={defaultPage} />
           </Switch>
         </React.Suspense>

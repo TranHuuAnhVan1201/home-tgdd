@@ -58,10 +58,10 @@ function CartsDefault(props) {
     // todo user id
     dispatch(actions.getUSER_ID(createBill.user_id));
     axios.post(`http://localhost:4333/bill/add`, createBill).then(
-      (data) => {   
+      (data) => {
         dispatch(actions.getBill_ID(data.data.id));
         console.log(data.data.id);
-        },
+      },
       (err) => { console.log(err); }
     );
   }
@@ -77,22 +77,22 @@ function CartsDefault(props) {
         bill_id: parseInt(listCarts.bill) + 1
       };
       axios.post(`http://localhost:4333/cart/add_cart_item`, obj).then(
-        (data) => { console.log(data);},
-        (err) => { console.log(err);}
+        (data) => { console.log(data); },
+        (err) => { console.log(err); }
       );
     });
   };
 
   const onBuy = () => {
-     if (role) {
-       setCheckOut(true);
-       createBill();
-       itemCart();
-       history.push("/paypal");
-     } else {
-       history.push("/login");
-     }
-    
+    if (role) {
+      setCheckOut(true);
+      createBill();
+      itemCart();
+      history.push("/paypal");
+    } else {
+      history.push("/login");
+    }
+
   };
   console.log(listCarts);
 

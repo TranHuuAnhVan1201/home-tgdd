@@ -70,4 +70,3 @@ export const getPRODUCT_ID = (product_id) => {
         product_id
     };
 }
-

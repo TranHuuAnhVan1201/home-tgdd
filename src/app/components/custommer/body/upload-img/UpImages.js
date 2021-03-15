@@ -1,17 +1,17 @@
-import * as actions from "../../../../actions/custommer/products/Product";
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./checkout.scss";
-
-
 function UpImages(props) {
-  const listCarts = useSelector((state) => state.GetCarts);
-
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [image, setImage] = useState("");
-  const [state, setState] = useState({ list: [], path: [], listImage: [], productID: [] });
+  const [state, setState] = useState({
+    list: [],
+    path: [],
+    listImage: [],
+    productID: [],
+  });
   const dispatch = useDispatch();
   const [inputs, setInputs] = useState({
     name: "",
@@ -25,17 +25,17 @@ function UpImages(props) {
     ID_Product: 300,
     id_Image: "",
     link_img:
-      "https://res.cloudinary.com/cv-thav-herokuapp-com/image/upload/v1615482832/laptop/lwms3vb9kvur0juw4l8y.jpg"
+      "https://res.cloudinary.com/cv-thav-herokuapp-com/image/upload/v1615482832/laptop/lwms3vb9kvur0juw4l8y.jpg",
   });
   const list = useSelector((state) => state.GetCarts);
   useEffect(() => {
     connectImgToProduct();
-  }, [state.productID])
+  }, [state.productID]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setInputs((inputs) => ({ ...inputs, [name]: value }));
-  }
+  };
 
   const uploadImage = async (e) => {
     const files = e.target.files;
@@ -59,77 +59,65 @@ function UpImages(props) {
       type: "image",
       url: `${file.secure_url}`,
     };
-    
-    let aw = await axios
-      .post(`http://localhost:4333/product/add`, image)
-      .then(
-        (res) => {
-          console.log("Post Image success");
-          setState({
-            ...state,
-            list: [...state.list, ...e.target.files],
-            path: [...state.path, `${file.secure_url}`],
-            listImage: [...state.listImage, `${res.data.image}`],
-            userID: listCarts.userID,
-          });
 
-        },
-        (err) => {
-          console.log(err);
-        }
+    let aw = await axios.post(`http://localhost:4333/product/add`, image).then(
+      (res) => {
+        console.log("Post Image success");
+        setState({
+          ...state,
+          list: [...state.list, ...e.target.files],
+          path: [...state.path, `${file.secure_url}`],
+          listImage: [...state.listImage, `${res.data.image}`],
+          userID: 12,
+        });
+      },
+      (err) => {
+        console.log(err);
+      }
     );
     // post product
   };
-
-
-
-  // state
-  listCarts.upload = state;
-  inputs.link_img = listCarts.upload.path;
+  inputs.link_img = state.path;
   // post
-  
+
   const upProduct = async () => {
-      await axios.post(`http://localhost:4333/product/adds`, inputs).then(
-        (res) => {
-          console.log("Post product success");
-          setState({
-            ...state,
-            productID: [...state.productID, res.data.product],
-          });
-        
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-    
+    await axios.post(`http://localhost:4333/product/adds`, inputs).then(
+      (res) => {
+        console.log("Post product success");
+        setState({
+          ...state,
+          productID: [...state.productID, res.data.product],
+        });
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   };
 
-console.log(state);
-
-const connectImgToProduct = () => {
-  if ((state.productID.length !== 0) && (state.productID !== [])) {
-    state.listImage.forEach((element) => {
-      let connect = {
-        image_id: parseInt(element),
-        product_image: state.productID,
-        main_image: 1,
-      };
-      axios.post(`http://localhost:4333/product/connect`, connect).then(
-        (res) => {
-          console.log("data post connect img to product success");
-          console.log(res);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-    });
-  }
-};
-
-
-  
+  const connectImgToProduct = () => {
+    if (state.productID.length !== 0 && state.productID !== []) {
+      console.log(state.listImage);
+      state.listImage.forEach((element, index) => {
+        console.log(element)
+        let connect = {
+          image_id: parseInt(element),
+          product_image: state.productID,
+          main_image: (index === 0 ? 1 : 0)
+        };
+        console.log(connect);
+        axios.post(`http://localhost:4333/product/connect`, connect).then(
+          (res) => {
+            console.log("data post connect img to product success");
+            console.log(res);
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+      });
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -138,8 +126,7 @@ const connectImgToProduct = () => {
     upProduct();
     // connect
     connectImgToProduct();
-  }
-
+  };
 
   return (
     <div className="checkout up-img">
@@ -307,8 +294,8 @@ const connectImgToProduct = () => {
                 flexWrap: "wrap",
               }}
             >
-              {listCarts.upload.path
-                ? listCarts.upload.path.map((value, key) => {
+              {state.path
+                ? state.path.map((value, key) => {
                     return (
                       <li style={{ padding: "12px 12px 0 0" }} key={key}>
                         <img
