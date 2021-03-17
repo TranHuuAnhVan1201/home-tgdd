@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "../_pagination/Pagination";
-import "../scss/HomeAdmin.scss";
+import "../_product/AdminProduct";
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import * as actions from "../../../../actions/custommer/products/Product";
-import * as action2 from "../../../../actions/admin/products/AdProduct";
-function AdminProduct(props) {
+import * as actions from "../../../../actions/admin/products/AdProduct";
+function Bill(props) {
   // QUẢN LÝ API
   const api = axios.create({
     baseURL: `http://localhost:4333/product`,
@@ -15,9 +14,7 @@ function AdminProduct(props) {
   const history = useHistory();
   const dispatch = useDispatch();
   const list = useSelector((state) => state.GetProductDatabase);
-
-  const LoadProduct = useSelector((state) => state.LoadProduct);
-
+  console.log(list);
   // QUẢN LÝ SẢN PHẨM.
   // 1. VIEW.
 
@@ -38,7 +35,6 @@ function AdminProduct(props) {
 
   // số lượng trang.
   const [totalPages, setTotalPages] = useState([]);
-
   const getUser = async () => {
     //khai báo phần tử cuối
     const indexofLastPost = currentpage * postperpage;
@@ -46,13 +42,14 @@ function AdminProduct(props) {
     const indexofFirstPost = indexofLastPost - postperpage;
     try {
       let data = await api.get("/").then(({ data }) => data);
+      console.log(data.result);
       let arrPage = [];
-      const Post = list.data.slice(indexofFirstPost, indexofLastPost);
+      const Post = data.result.slice(indexofFirstPost, indexofLastPost);
       //                      1*2 = 2,            ,  2-2 = 0
       // 0,1
       // data => 2-> 8;
       setState({ data: Post });
-
+      console.log(state);
       // cắt danh sách mảng bằng slice phần tử đầu phần tử cuối
       for (
         let i = 1;
@@ -69,7 +66,6 @@ function AdminProduct(props) {
       console.error(error);
     }
   };
-
   const onAddPage = (page) => {
     setTimeout(function () {
       setCurrentpage(page);
@@ -77,17 +73,10 @@ function AdminProduct(props) {
   };
   useEffect(() => {
     getUser();
-    if (LoadProduct) {
-      if (LoadProduct.length > 0) {
-        list.data = LoadProduct;
-      }
-    }
     if (currentpage) {
       getUser();
     }
-  }, [currentpage, LoadProduct]);
-  //
-
+  }, [currentpage]);
   //function
   // 1. thêm sản phẩm mới.
   // chuyển link sang giao diện upload sản phẩm.
@@ -111,22 +100,10 @@ function AdminProduct(props) {
   // Sửa nhanh được 1 vài thuộc tính.
   // Sửa chi tiết => chuyển trang sang giao diện upload. đăng.
   // 3.1 hiển thị giao diện sửa.
-  const handleClickEDIT = (id, value) => {
-    dispatch(actions.actLoadProductListRequest());
-    // dispatch(actions.actLoadProductListRequest());
-    // console.log(id);
-    // console.log(value);
-
-    //
-    let itemProduct;
-    state.data.filter((item) => {
-      if (item.id === id) {
-        itemProduct = item;
-      }
-    });
-
-    
-    dispatch(action2.getProductEdit(value));
+  const handleClickEDIT = async (id, value) => {
+    console.log(id);
+    console.log(value);
+    dispatch(actions.getProductEdit(value));
     history.push("product/upload");
   };
 
@@ -141,6 +118,7 @@ function AdminProduct(props) {
   // 3.3 click submit, put thông tin đã nhận ở 3.2.3 lên database.
   const handleSubmitEDIT = async (event) => {
     event.preventDefault();
+    console.log(edit);
     let dele = await api.put(`/update_product/${edit.id}`, edit);
     getUser();
   };
@@ -211,4 +189,4 @@ function AdminProduct(props) {
   );
 }
 
-export default AdminProduct;
+export default Bill;

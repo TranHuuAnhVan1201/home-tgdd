@@ -9,10 +9,17 @@ export const TOTAL_PRICE = 'TOTAL_PRICE';
 export const BILL_ID = "BILL_ID";
 export const CART_ID = "CART_ID";
 
+// admin.
+export const GETPRODUCT_DATABASE = "GETPRODUCT_DATABASE";
 //product/
 export const GETPRODUCTTEST = "GETPRODUCTTEST";
+export const PRODUCT_EDIT = "PRODUCT_EDIT";
 
 //search 
+
+
+//load
+export const LOAD_PRODUCT_LIST = "LOAD_PRODUCT_LIST";
 
 
 //up img

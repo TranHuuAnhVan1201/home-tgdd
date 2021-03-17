@@ -4,6 +4,7 @@ import "./scss/Header.scss";
 import { useSelector } from "react-redux";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
+import Search from "../body/page-search/search-product/Search";
 
 
 function Header(props) {
@@ -40,6 +41,9 @@ function Header(props) {
           if (window.location.href !== "http://localhost:4200/#/search") {
             history.push("/search");
           }
+
+          <Search data={res.data} data2={ 2 } />;
+         
         },
         (err) => {
           console.log(err);
@@ -153,6 +157,7 @@ function Header(props) {
           </li>
         </nav>
       </div>
+
     </header>
   );
 }

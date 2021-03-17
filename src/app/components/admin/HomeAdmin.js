@@ -9,6 +9,7 @@ function HomeAdmin(props) {
                 <Link to="/admin/user">USER</Link>
                 <Link to="/admin/product">PRODUCT</Link>
                 <Link to="/admin/category">CATEGORY</Link>
+                
             </div>    
             <div className="home-right">
                 Home Right.

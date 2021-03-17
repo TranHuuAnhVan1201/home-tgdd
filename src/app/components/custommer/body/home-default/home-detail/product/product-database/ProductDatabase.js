@@ -3,35 +3,44 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./../product-default/ProductDefault.scss";
 import * as actions from "../../../../../../../actions/custommer/products/Product";
-import axios from "axios";
+import * as actionsAD from "../../../../../../../actions/admin/products/AdProduct";
 
-function convertToSlug(slug) {
-  return slug
-    .toLowerCase()
-    .replace(/ /g, "-")
-    .replace(/[^\w-]+/g, "");
+function to_slug(str) {
+  // Chuyển hết sang chữ thường
+  if (str) {
+    str = str.toLowerCase();
+
+    // xóa dấu
+    str = str.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/g, "a");
+    str = str.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/g, "e");
+    str = str.replace(/(ì|í|ị|ỉ|ĩ)/g, "i");
+    str = str.replace(/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/g, "o");
+    str = str.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/g, "u");
+    str = str.replace(/(ỳ|ý|ỵ|ỷ|ỹ)/g, "y");
+    str = str.replace(/(đ)/g, "d");
+
+    // Xóa ký tự đặc biệt
+    str = str.replace(/([^0-9a-z-\s])/g, "");
+
+    // Xóa khoảng trắng thay bằng ký tự -
+    str = str.replace(/(\s+)/g, "-");
+
+    // xóa phần dự - ở đầu
+    str = str.replace(/^-+/g, "");
+
+    // xóa phần dư - ở cuối
+    str = str.replace(/-+$/g, "");
+
+    // return
+    return str;
+  }
 }
 
 function ProductDatabase(props) {
+  // database của reducer GetProductDatabase.js
+  const database = useSelector((state) => state.GetProductDatabase);
   const dispatch = useDispatch();
-  const [database, setDatabase] = useState([]);
-  useEffect(() => {
-    const getProduct = async () => {
-      const api = axios.create({
-        baseURL: `http://localhost:4333/product/`,
-      });
-      let res = await api
-        .get()
-        .then((res) => {
-          console.log(res.data.result);
-          setDatabase(res.data.result);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    getProduct();
-  }, []);
+  useEffect(() => {}, []);
 
   const addProduct = (item) => {
     dispatch(actions.addProductToCart(item));
@@ -58,7 +67,7 @@ function ProductDatabase(props) {
                   transform: "translate3d(0px, 0px, 0px)",
                 }}
               >
-                {database.map((value, key) => {
+                {database.data.map((value, key) => {
                   if (database) {
                     return (
                       <li
@@ -67,10 +76,11 @@ function ProductDatabase(props) {
                         key={key}
                       >
                         <div className="item">
+                          {/* <Link to={"/product-detail/" + convertToSlug(value.title) + "." + value.id} onClick={() => getIDName(value)} className="vertion2020 large"> */}
                           <Link
                             to={
                               "/product-detail/" +
-                              convertToSlug(`${value.name}`) +
+                              to_slug(value.name) +
                               "." +
                               value.id
                             }

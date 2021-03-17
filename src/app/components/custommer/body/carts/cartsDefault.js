@@ -8,7 +8,10 @@ import PayPal from "../paypal/PayPal";
 import axios from "axios";
 
 function CartsDefault(props) {
+  // 1
   const listCarts = useSelector((state) => state.GetCarts);
+
+
   const [checkout, setCheckOut] = useState(false);
   const [role, setRole] = useState(null);
   let history = useHistory();

@@ -5,6 +5,7 @@ export default class ProductDetail extends Component {
     render() {
         return (
             <section className="type0">
+                <h1>asdasdasd</h1>
                 {
                     dataProduct.map((value, key) => {
                         

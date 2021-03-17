@@ -3,7 +3,6 @@ import *as types from './../../../constants/ActionType';
 const init = JSON.parse(localStorage.getItem('cart')) || { numberCart: 0, totalPrice: 0, items: [], bill: 0, userID: 0, upload: [], imgID: [], productID: 0}
 
 var myReducer = (state = init, action) => {
-    console.log(state);
     const updateTotal = () => {
         let total = 0;
       if (state.items.length > 0) {
@@ -30,8 +29,7 @@ var myReducer = (state = init, action) => {
                     url: action.payload.url,
                     price: action.payload.price,
                 }
-                state.items.push(cart);
-                
+                state.items.push(cart);  
             }
             else {
                 let check = false;

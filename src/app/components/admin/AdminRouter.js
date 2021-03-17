@@ -7,6 +7,8 @@ const HomeAdmin = React.lazy(() => import('./HomeAdmin'));
 const ADMIN_USER = React.lazy(() => import('./body/_user/USER'));
 const ADMIN_PRODUCTS = React.lazy(() => import('./body/_product/AdminProduct'));
 
+const ADMIN_UPLOAD = React.lazy(() => import("./body/upload-img/UpImages"));
+
 function AdminRouter(props) {
     return (
         <HashRouter>
@@ -17,6 +19,7 @@ function AdminRouter(props) {
                                 <Route path={"/admin"} exact component={HomeAdmin} />
                                 <Route path={"/admin/user"} exact component={ADMIN_USER} />
                                 <Route path={"/admin/product"} exact component={ADMIN_PRODUCTS} />
+                                <Route path={"/admin/product/upload"} exact component={ADMIN_UPLOAD} />
                             </Switch>
                         <FooterAdmin></FooterAdmin>
                 </React.Suspense>

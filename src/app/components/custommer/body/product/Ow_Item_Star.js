@@ -12,9 +12,10 @@ function convertToSlug(slug) {
 function Ow_Item_Star(props) {
     let { value } = props;
 
-    
+    console.log(value);
     return (
         <li className="owl-item star">
+            <h1>asdasdasdasd</h1>
             <div className="item" data-index={1}>
                 <Link to={"/detail/" + convertToSlug(value.item_Title) + "." + value.id } className="vertion2020 large">
                    

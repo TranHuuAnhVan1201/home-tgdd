@@ -1,8 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import "./checkout.scss";
+import * as actions from "../../../../actions/custommer/products/Product";
+import * as action2 from "../../../../actions/admin/products/AdProduct";
 function UpImages(props) {
+  const listCarts = useSelector((state) => state.GetProductDatabase);
+  console.log(listCarts);
+
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [image, setImage] = useState("");
@@ -12,7 +22,7 @@ function UpImages(props) {
     listImage: [],
     productID: [],
   });
-  const dispatch = useDispatch();
+
   const [inputs, setInputs] = useState({
     name: "",
     quantity_in_stock: 0,
@@ -27,7 +37,18 @@ function UpImages(props) {
     link_img:
       "https://res.cloudinary.com/cv-thav-herokuapp-com/image/upload/v1615482832/laptop/lwms3vb9kvur0juw4l8y.jpg",
   });
-  const list = useSelector((state) => state.GetCarts);
+
+  useEffect(() => {
+    if (listCarts.numberCart !== 0) {
+      setInputs(listCarts.edit);
+    }
+  }, [listCarts.numberCart])
+  
+  console.log(inputs);
+
+
+  const [edit, setEdit] = useState([])
+  console.log(edit);
   useEffect(() => {
     connectImgToProduct();
   }, [state.productID]);
@@ -60,6 +81,8 @@ function UpImages(props) {
       url: `${file.secure_url}`,
     };
 
+    //up ảnh lấy id
+
     let aw = await axios.post(`http://localhost:4333/product/add`, image).then(
       (res) => {
         console.log("Post Image success");
@@ -77,9 +100,8 @@ function UpImages(props) {
     );
     // post product
   };
-  inputs.link_img = state.path;
-  // post
 
+  // post
   const upProduct = async () => {
     await axios.post(`http://localhost:4333/product/adds`, inputs).then(
       (res) => {
@@ -96,7 +118,7 @@ function UpImages(props) {
   };
 
   const connectImgToProduct = () => {
-    if (state.productID.length !== 0 && state.productID !== []) {
+    if (state.productID.length > 0) {
       console.log(state.listImage);
       state.listImage.forEach((element, index) => {
         console.log(element)
@@ -118,14 +140,39 @@ function UpImages(props) {
       });
     }
   };
+  const updateProduct = async () => {
+    alert("cập nhập");
+    axios.put(`http://localhost:4333/product/update/${inputs.id}`, inputs).then(
+      (res) => {
+        console.log("Update success !");
+        history.push("/admin/product");
+        dispatch(actions.actLoadProductListRequest());
+      
+
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setSubmitted(true);
-    // product
-    upProduct();
-    // connect
-    connectImgToProduct();
+    if (listCarts.numberCart === 0) {
+      // product
+      upProduct();
+      // connect
+      connectImgToProduct();
+    }
+    else {
+      console.log('cap nhap');
+      updateProduct();
+
+      //
+
+
+    }
   };
 
   return (
@@ -268,8 +315,6 @@ function UpImages(props) {
               placeholder="Upload an Image !"
               onChange={uploadImage}
             />
-
-            <button>Post img</button>
             <h3>Loadding</h3>
 
             {loading ? (
@@ -312,13 +357,14 @@ function UpImages(props) {
                     );
                   })
                 : null}
+              
             </div>
           </div>
           <div className="column order">
             <h2>Upload</h2>
 
             <button className="submit order" type="submit">
-              Upload Product
+              {listCarts.numberCart ===0 ? "Đăng sản phẩm" : "Sửa sản phẩm"}
             </button>
           </div>
         </form>
