@@ -15,9 +15,9 @@ function AdminProduct(props) {
   const history = useHistory();
   const dispatch = useDispatch();
   const list = useSelector((state) => state.GetProductDatabase);
-
+  console.log(list);
   const LoadProduct = useSelector((state) => state.LoadProduct);
-
+  console.log(LoadProduct);
   // QUẢN LÝ SẢN PHẨM.
   // 1. VIEW.
 

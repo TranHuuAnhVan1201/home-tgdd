@@ -14,12 +14,15 @@ export const getProduct = () => {
   };
 };
 
+// cart
 export const addProductToCart = (payload) => {
   return {
     type: types.ADD_PRODUCT_TO_CART,
     payload,
   };
 };
+
+
 export const deleteProductInCart = (payload) => {
   return {
     type: types.DELETE_CART,
@@ -45,6 +48,8 @@ export const getTotal_Price = (payload) => {
     payload,
   };
 };
+
+// end cart
 export const getBill_ID = (bill_id) => {
   return {
     type: types.BILL_ID,

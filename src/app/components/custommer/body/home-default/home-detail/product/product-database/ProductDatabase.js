@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./../product-default/ProductDefault.scss";
 import * as actions from "../../../../../../../actions/custommer/products/Product";
-import * as actionsAD from "../../../../../../../actions/admin/products/AdProduct";
 
 function to_slug(str) {
   // Chuyển hết sang chữ thường
@@ -39,6 +38,8 @@ function to_slug(str) {
 function ProductDatabase(props) {
   // database của reducer GetProductDatabase.js
   const database = useSelector((state) => state.GetProductDatabase);
+  console.log(typeof (database));
+  
   const dispatch = useDispatch();
   useEffect(() => {}, []);
 
@@ -76,7 +77,6 @@ function ProductDatabase(props) {
                         key={key}
                       >
                         <div className="item">
-                          {/* <Link to={"/product-detail/" + convertToSlug(value.title) + "." + value.id} onClick={() => getIDName(value)} className="vertion2020 large"> */}
                           <Link
                             to={
                               "/product-detail/" +

@@ -81,9 +81,9 @@ function Header(props) {
             </li>
             <div className="menu-right">
               <li>
-                <Link to="/about">Về chúng tôi</Link>
+                <a href="https://youtu.be/jlXMtRMsnwo">Sử dụng website</a>
               </li>
-              <li>
+              {/* <li>
                 <Link to="/policy">Bảo hành</Link>
               </li>
               <li>
@@ -94,7 +94,7 @@ function Header(props) {
               </li>
               <li>
                 <Link to="/new">Tin tức</Link>
-              </li>
+              </li> */}
               <li>
                 {" "}
                 {role ? (
@@ -157,7 +157,6 @@ function Header(props) {
           </li>
         </nav>
       </div>
-
     </header>
   );
 }

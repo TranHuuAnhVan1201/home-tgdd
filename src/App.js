@@ -47,9 +47,7 @@ function App() {
             <Route path={"/paypal"} component={PayPal} />
             <Route path={"/order"} component={Order} />
             <Route path={"/history"} component={PageHistory} />
-           
-           
-            
+
             <Route path={"/"} component={defaultPage} />
           </Switch>
         </React.Suspense>

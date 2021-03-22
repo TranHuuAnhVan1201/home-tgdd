@@ -24,7 +24,6 @@ var myReducer = (state = init, action) => {
     case types.GETPRODUCT_DATABASE:
       return state;
     case types.PRODUCT_EDIT:
-      
       let edit = {
         id: action.payload.id,
         name: action.payload.name,
