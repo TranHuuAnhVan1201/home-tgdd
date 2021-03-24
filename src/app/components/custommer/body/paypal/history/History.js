@@ -13,11 +13,9 @@ function History(props) {
        const history = async () => {
            let res = await api.get();
          setList(res.data.bills);
-         console.log(res);
         };
         history();
     }, [])
-  console.log(listCarts.userID);
     return (
       <div>
         <h2>History</h2>

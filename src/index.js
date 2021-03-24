@@ -1,23 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import './App.scss';
 import App from './App';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware,compose } from 'redux';
 import reportWebVitals from './reportWebVitals';
 import thunk from 'redux-thunk';
-import appReducer from './app/reducers/custommer/index';
-import logger from "redux-logger";
+import appReducer from './app/_reducers/index';
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   appReducer,
   composeEnhancer(applyMiddleware(thunk))
-);
+  );
 
-ReactDOM.render(
+ReactDOM.render(  
   <Provider store={store}>
-    <App />
-  </Provider>, document.getElementById('root'));
+  <App />
+</Provider>, document.getElementById('root'));
 reportWebVitals();
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

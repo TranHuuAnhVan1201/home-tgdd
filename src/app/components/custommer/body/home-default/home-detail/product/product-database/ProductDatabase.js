@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./../product-default/ProductDefault.scss";
-import * as actions from "../../../../../../../actions/custommer/products/Product";
+import * as actions from "../../../../../../../_actions/custommer/products/product";
 
 function to_slug(str) {
   // Chuyển hết sang chữ thường
@@ -37,12 +37,17 @@ function to_slug(str) {
 
 function ProductDatabase(props) {
   // database của reducer GetProductDatabase.js
-  const database = useSelector((state) => state.GetProductDatabase);
-  console.log(typeof (database));
-  
   const dispatch = useDispatch();
-  useEffect(() => {}, []);
 
+  //database 1
+  // const database = useSelector((state) => state.LoadProduct);
+    const database = useSelector((state) => state.GetProduct);
+  useEffect(() => {
+    // 1
+    // dispatch(actions.actLoadProductListRequest());
+
+    dispatch(actions.getProduct());
+  }, []);
   const addProduct = (item) => {
     dispatch(actions.addProductToCart(item));
   };
@@ -68,104 +73,108 @@ function ProductDatabase(props) {
                   transform: "translate3d(0px, 0px, 0px)",
                 }}
               >
-                {database.data.map((value, key) => {
-                  if (database) {
-                    return (
-                      <li
-                        className={"owl-item" + (value.id === 1 ? " star" : "")}
-                        id={value.id}
-                        key={key}
-                      >
-                        <div className="item">
-                          <Link
-                            to={
-                              "/product-detail/" +
-                              to_slug(value.name) +
-                              "." +
-                              value.id
-                            }
-                            onClick={() => getIDName(value)}
-                            className="vertion2020 large"
-                          >
-                            <div class="label-top">
-                              <div className="heightlabel">Trả góp 0%</div>
-
-                              <Link to="/carts" className="item-carts">
-                                <i
-                                  className="fas fa-cart-plus"
-                                  onClick={() => addProduct(value)}
-                                ></i>
-                              </Link>
-                            </div>
-
-                            <img
-                              src={value.url}
-                              className="img-default"
-                              alt={value.picAlt}
-                            />
-                            <div className="text-star">
-                              <div>
-                                <div className="result-label sale">
-                                  <i className="roundy">%</i>
-                                  <span className="text">{"Giảm sốc"}</span>
-                                </div>
+                {database.length !== 0 ||
+                database.length === undefined ||
+                database !== null
+                  ? database.map((value, key) => {
+                      return (
+                        <li
+                          className={
+                            "owl-item" + (value.id === 1 ? " star" : "")
+                          }
+                          id={value.id}
+                          key={key}
+                        >
+                          <div className="item">
+                            <Link
+                              to={
+                                "/product-detail/" +
+                                to_slug(value.name) +
+                                "." +
+                                value.id
+                              } 
+                              onClick={() => getIDName(value)}
+                              className="vertion2020 large"
+                            >
+                              <div class="label-top">
                                 <div className="heightlabel">Trả góp 0%</div>
+
+                                <Link to="/carts" className="item-carts">
+                                  <i
+                                    className="fas fa-cart-plus"
+                                    onClick={() => addProduct(value)}
+                                  ></i>
+                                </Link>
                               </div>
-                              <label className="preorder">
-                                {" "}
-                                {value.preorder}
-                              </label>
-                              <h3>{value.name}</h3>
-                              <div className="props">
-                                <span className="dotted  ">
-                                  Ram {value.ram} GB
-                                </span>
-                                <span className="dotted  ">
-                                  Ssd {value.ssd} GB
-                                </span>
-                                <span className="dotted  ">
-                                  Core {value.core}
-                                </span>
-                                <span className="dotted  ">
-                                  Pin {value.pin}H
-                                </span>
-                              </div>
-                              <h6 className="textkm">{value.textkm} </h6>
-                              <div className="price">
-                                <strong>{value.price}đ</strong>
-                                <span>{value.priceSale}đ</span>
-                                <i>{5}%</i>
-                              </div>
-                              <div className="promo noimage">
-                                <p>{value.textBouns}</p>
-                              </div>
-                              <div className="ratingresult">
-                                <i className="icontgdd-ystar" />
-                                <i className="icontgdd-ystar" />
-                                <i className="icontgdd-ystar" />
-                                <i className="icontgdd-ystar" />
-                                <i className="icontgdd-ystar" />
-                                <span>{value.review} đánh giá</span>
-                              </div>
-                              <input
-                                className="spInfo"
-                                data-brand="Samsung"
-                                data-cat="Điện thoại"
-                                data-price={23490000}
-                                data-pro={3}
-                                data-version
-                                id="data220833"
-                                name="data220833"
-                                type="hidden"
-                                defaultValue={220833}
+
+                              <img
+                                src={value.url}
+                                className="img-default"
+                                alt={value.picAlt}
                               />
-                            </div>
-                          </Link>
-                        </div>
-                      </li>
-                    );
-                  }
-                })}
+                              <div className="text-star">
+                                <div>
+                                  <div className="result-label sale">
+                                    <i className="roundy">%</i>
+                                    <span className="text">{"Giảm sốc"}</span>
+                                  </div>
+                                  <div className="heightlabel">Trả góp 0%</div>
+                                </div>
+                                <label className="preorder">
+                                  {" "}
+                                  {value.preorder}
+                                </label>
+                                <h3>{value.name}</h3>
+                                <div className="props">
+                                  <span className="dotted  ">
+                                    Ram {value.ram} GB
+                                  </span>
+                                  <span className="dotted  ">
+                                    Ssd {value.ssd} GB
+                                  </span>
+                                  <span className="dotted  ">
+                                    Core {value.core}
+                                  </span>
+                                  <span className="dotted  ">
+                                    Pin {value.pin}H
+                                  </span>
+                                </div>
+                                <h6 className="textkm">{value.textkm} </h6>
+                                <div className="price">
+                                  <strong>{value.price}đ</strong>
+                                  <span>{value.priceSale}đ</span>
+                                  <i>{15}%</i>
+                                </div>
+                                <div className="promo noimage">
+                                  <p>{value.textBouns}</p>
+                                </div>
+                                <div className="ratingresult">
+                                  <i className="icontgdd-ystar" />
+                                  <i className="icontgdd-ystar" />
+                                  <i className="icontgdd-ystar" />
+                                  <i className="icontgdd-ystar" />
+                                  <i className="icontgdd-ystar" />
+                                  <span>{value.review} đánh giá</span>
+                                </div>
+                                <input
+                                  className="spInfo"
+                                  data-brand="Samsung"
+                                  data-cat="Điện thoại"
+                                  data-price={23490000}
+                                  data-pro={3}
+                                  data-version
+                                  id="data220833"
+                                  name="data220833"
+                                  type="hidden"
+                                  defaultValue={220833}
+                                />
+                              </div>
+                            </Link>
+                          </div>
+                        </li>
+                      );
+                    })
+                  : null}
               </div>
               <div className="clr" />
               <div className="owl-controls clickable">

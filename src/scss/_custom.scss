@@ -17,15 +17,19 @@ section {
     color: white;
     padding-bottom: 10px;
 }
-    .btn-back {
-        padding: 10px 20px;
-        background-color: #81B700;
-    }
-    .btn-checkout {
-        padding: 10px 20px;
-        background-color: #FED101;
-    }
-        .btn-checkout:hover {
-            background-color: #288ad6;
-            color: #FFF;
-        }
+.btn-back {
+    padding: 10px 20px;
+    background-color: #81B700;
+}
+
+.btn-checkout {
+    padding: 10px 20px;
+    background-color: #FED101;
+}
+
+.btn-checkout:hover {
+    background-color: #288ad6;
+    color: #FFF;
+}
+
+

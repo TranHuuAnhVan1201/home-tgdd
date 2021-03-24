@@ -117,6 +117,7 @@ a.vertion2020 .heightlabel {
                 position: absolute;
                 top: 0;
                 left: 0;
+                overflow: hidden;
             }
             .owl-item.star .text-star .heightlabel {
                 position: unset;
@@ -160,6 +161,7 @@ a.vertion2020 .heightlabel {
     height: 180px;
     margin: 15px auto;
     transition: all ease 300ms;
+    object-fit: contain;
 }
 .result-label.sale {
     background: linear-gradient(90deg,#ef3006 4.5%,#c60004 90.3%);

@@ -8,9 +8,6 @@ import ProductBestSale from './home-detail/product/product-best-sale/ProductBest
 import ProductDefault from './home-detail/product/product-default/ProductDefault'
 import ProductDatabase from './home-detail/product/product-database/ProductDatabase';
 
-
-
-
 function homeDefault(props) {
     return (
       <section>

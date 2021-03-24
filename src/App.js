@@ -1,35 +1,32 @@
-import jwtDecode from 'jwt-decode';
-import React, { useEffect, useState } from 'react';
-import { HashRouter, Route, Router, Switch } from 'react-router-dom';
-import ScrollToTop from 'react-router-scroll-top';
+import React, { useEffect, useState } from "react";
+import { HashRouter, Route, Switch } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+import NotFoundPage from "./app/_pages/custommer-page/Not_Found_Page/NotFoundPage";
+import ScrollToTop from "react-router-scroll-top";
 
-
-const defaultPage = React.lazy(() => import('./app/pages/custommer-page/default-pages/defaultPage'));
-
-const LoginPage = React.lazy(() => import('./app/components/register/login/Login'));
-const Register = React.lazy(() => import('./app/components/register/register/Register'));
-const AdminRouter = React.lazy(() => import('./app/components/admin/AdminRouter'));
-const Page404 = React.lazy(() => import('./app/components/Page404'));
-const PayPal = React.lazy(() => import('./app/components/custommer/body/paypal/PayPal'));
-const Order = React.lazy(() => import('./app/components/custommer/body/paypal/Order'));
-const PageHistory = React.lazy(() => import('./app/components/custommer/body/paypal/history/History'));
-
-
+const defaultPage = React.lazy(() =>
+  import("./app/_pages/custommer-page/default-pages/defaultPage")
+);
+const LoginPage = React.lazy(() => import("./app/_pages/login-page/LoginPage"));
+const Admin_deafault_page = React.lazy(() =>
+  import("./app/_pages/admin-page/admin-default-page/Admin_deafault_page")
+);
 
 const loading = (
   <div className="pt-3 text-center">
     <div className="sk-spinner sk-spinner-pulse"></div>
   </div>
-)
+);
+
 function App() {
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState("");
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      var decoded = jwtDecode(token);
+      var decoded = jwt_decode(token);
       setRole(decoded.role);
-      if (role === 'admin') {
-        console.log("Đã đăng nhập");
+      if (role === "admin") {
+        console.log("đúng");
       }
     }
   }, []);
@@ -39,16 +36,11 @@ function App() {
         <React.Suspense fallback={loading}>
           <Switch>
             <Route path={"/login"} exact component={LoginPage} />
-            <Route path={"/register"} exact component={Register} />
             <Route
               path={"/admin"}
-              component={role === "admin" ? AdminRouter : Page404}
+              component={role === "admin" ? Admin_deafault_page : NotFoundPage}
             />
-            <Route path={"/paypal"} component={PayPal} />
-            <Route path={"/order"} component={Order} />
-            <Route path={"/history"} component={PageHistory} />
-
-            <Route path={"/"} component={defaultPage} />
+            <Route path="/" component={defaultPage} />
           </Switch>
         </React.Suspense>
       </ScrollToTop>
@@ -57,6 +49,3 @@ function App() {
 }
 
 export default App;
-
-
-

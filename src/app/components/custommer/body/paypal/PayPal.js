@@ -16,7 +16,7 @@ function PayPal(props) {
                         {
                             description: "Thanh toán",
                             amount: {
-                                value: parseFloat(listCarts.totalPrice / 230000).toFixed(2)
+                                value: parseFloat(listCarts.totalPrice / 2300000).toFixed(2)
                             }
                         }
                     ]
@@ -48,7 +48,7 @@ function PayPal(props) {
     }, [])
     
     return (
-        <div className="paypal-av">
+        <div className="paypal-av" style={{margin: "100px auto"}}>
             <div ref={paypal}></div>
 
         </div>

@@ -1,224 +1,366 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import *as actions from '../../../../actions/custommer/products/Product';
-
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import * as actions from "../../../../_actions/custommer/products/product";
+import Comment from "../cmt/Comment";
+import "../cmt/Comment.scss";
 function to_slug(str) {
   // Chuyển hết sang chữ thường
-    if (str) {
-          str = str.toLowerCase();
+  if (str) {
+    str = str.toLowerCase();
 
-          // xóa dấu
-          str = str.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/g, "a");
-          str = str.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/g, "e");
-          str = str.replace(/(ì|í|ị|ỉ|ĩ)/g, "i");
-          str = str.replace(/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/g, "o");
-          str = str.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/g, "u");
-          str = str.replace(/(ỳ|ý|ỵ|ỷ|ỹ)/g, "y");
-          str = str.replace(/(đ)/g, "d");
+    // xóa dấu
+    str = str.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/g, "a");
+    str = str.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/g, "e");
+    str = str.replace(/(ì|í|ị|ỉ|ĩ)/g, "i");
+    str = str.replace(/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/g, "o");
+    str = str.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/g, "u");
+    str = str.replace(/(ỳ|ý|ỵ|ỷ|ỹ)/g, "y");
+    str = str.replace(/(đ)/g, "d");
 
-          // Xóa ký tự đặc biệt
-          str = str.replace(/([^0-9a-z-\s])/g, "");
+    // Xóa ký tự đặc biệt
+    str = str.replace(/([^0-9a-z-\s])/g, "");
 
-          // Xóa khoảng trắng thay bằng ký tự -
-          str = str.replace(/(\s+)/g, "-");
+    // Xóa khoảng trắng thay bằng ký tự -
+    str = str.replace(/(\s+)/g, "-");
 
-          // xóa phần dự - ở đầu
-          str = str.replace(/^-+/g, "");
+    // xóa phần dự - ở đầu
+    str = str.replace(/^-+/g, "");
 
-          // xóa phần dư - ở cuối
-          str = str.replace(/-+$/g, "");
+    // xóa phần dư - ở cuối
+    str = str.replace(/-+$/g, "");
 
-          // return
-          return str;
-    }
+    // return
+    return str;
+  }
 }
 
 function ProductDetail(props) {
-    const getID = useSelector(state => state.IDName);
-    console.log(getID);
-    const dispatch = useDispatch();
-    const addProduct = (item) => {
-        dispatch(actions.addProductToCart(item));
-    }
-   
-    return (
-        <section className="type0">
-            <div>
-                <ul className="breadcrumb">
-                    <li>
-                        <Link to="/">
-                            {getID.id.categoryBeadcrumb}
-                        </Link>
-                        <span>›</span>
-                    </li>
-                    <li>
-                        <Link to="/">
-                            {getID.id.companyBeadcrumb}
-                        </Link>
-                    </li>
-                </ul>
+  const history = useHistory();
+  const getID = useSelector((state) => state.IDName);
+    const { register, handleSubmit, errors } = useForm();
+    const [check, setCheck] = useState(false)
+  if (getID.id === undefined) {
+    history.push("/");
+    window.setTimeout(window.location.reload.bind(window.location), 10);
+  }
+  const dispatch = useDispatch();
+  const addProduct = (item) => {
+    dispatch(actions.addProductToCart(item));
+  };
+  // answer
 
-                <div className="rowtop">
-                    <h1>
-                        {getID.id.title}
-                    </h1>
-                    <div className="ratingresult">
-                        <span className="star"><i className="icontgdd-star" /></span>
-                        <span className="star"><i className="icontgdd-star" /></span>
-                        <span className="star"><i className="icontgdd-star" /></span>
-                        <span className="star"><i className="icontgdd-star" /></span>
-                        <span className="star"><i className="icontgdd-star" /></span>
-                        <a href="#danhgia">9 đánh giá</a>
-                    </div>
-                    <div className="likeshare">
-                        <div id="fb-root" className=" fb_reset"><div style={{ position: 'absolute', top: '-10000px', width: 0, height: 0 }}><div /></div></div>
-                        <div className="fb-like fb_iframe_widget" data-href="/may-tinh-bang/huawei-matepad-t8" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true" fb-xfbml-state="rendered" fb-iframe-plugin-query="action=like&app_id=242045172499368&container_width=0&href=https%3A%2F%2Fwww.thegioididong.com%2Fmay-tinh-bang%2Fhuawei-matepad-t8&layout=button_count&locale=vi_VN&sdk=joey&share=true&show_faces=true"><span style={{ verticalAlign: 'bottom', width: 150, height: 28 }}><iframe width="1000px" height="1000px" data-testid="fb:like Facebook Social Plugin" title="fb:like Facebook Social Plugin" frameBorder={0} allowTransparency="true" allowFullScreen="true" scrolling="no" allow="encrypted-media" src="https://www.facebook.com/v8.0/plugins/like.php?action=like&app_id=242045172499368&channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Dfaaba2507381d8%26domain%3Dwww.thegioididong.com%26origin%3Dhttps%253A%252F%252Fwww.thegioididong.com%252Ffafbbb757083d%26relation%3Dparent.parent&container_width=0&href=https%3A%2F%2Fwww.thegioididong.com%2Fmay-tinh-bang%2Fhuawei-matepad-t8&layout=button_count&locale=vi_VN&sdk=joey&share=true&show_faces=true" style={{ border: 'none', visibility: 'visible', width: 150, height: 28 }} __idm_frm__={627} className /></span></div>
-                    </div>
+
+  return (
+    <section className="type0">
+      <div>
+        <ul className="breadcrumb">
+          <li>
+            <Link to="/">
+              {getID.id.categoryBeadcrumb
+                ? getID.id.categoryBeadcrumb
+                : "Laptop"}
+            </Link>
+            <span>›</span>
+          </li>
+          <li>
+            <Link to="/">
+              {getID.id.companyBeadcrumb ? getID.id.companyBeadcrumb : "Hãng"}
+            </Link>
+          </li>
+        </ul>
+
+        <div className="rowtop">
+          <h1>{getID.id.title ? getID.id.title : getID.id.name}</h1>
+          <div className="ratingresult">
+            <span className="star">
+              <i className="icontgdd-star" />
+            </span>
+            <span className="star">
+              <i className="icontgdd-star" />
+            </span>
+            <span className="star">
+              <i className="icontgdd-star" />
+            </span>
+            <span className="star">
+              <i className="icontgdd-star" />
+            </span>
+            <span className="star">
+              <i className="icontgdd-star" />
+            </span>
+            <a href="#danhgia">9 đánh giá</a>
+          </div>
+          <div className="likeshare">
+            <div id="fb-root" className=" fb_reset">
+              <div
+                style={{
+                  position: "absolute",
+                  top: "-10000px",
+                  width: 0,
+                  height: 0,
+                }}
+              >
+                <div />
+              </div>
+            </div>
+            <div
+              className="fb-like fb_iframe_widget"
+              data-href="/may-tinh-bang/huawei-matepad-t8"
+              data-layout="button_count"
+              data-action="like"
+              data-show-faces="true"
+              data-share="true"
+              fb-xfbml-state="rendered"
+              fb-iframe-plugin-query="action=like&app_id=242045172499368&container_width=0&href=https%3A%2F%2Fwww.thegioididong.com%2Fmay-tinh-bang%2Fhuawei-matepad-t8&layout=button_count&locale=vi_VN&sdk=joey&share=true&show_faces=true"
+            >
+              <span style={{ verticalAlign: "bottom", width: 150, height: 28 }}>
+                <iframe
+                  width="1000px"
+                  height="1000px"
+                  data-testid="fb:like Facebook Social Plugin"
+                  title="fb:like Facebook Social Plugin"
+                  frameBorder={0}
+                  allowTransparency="true"
+                  allowFullScreen="true"
+                  scrolling="no"
+                  allow="encrypted-media"
+                  src="https://www.facebook.com/v8.0/plugins/like.php?action=like&app_id=242045172499368&channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Dfaaba2507381d8%26domain%3Dwww.thegioididong.com%26origin%3Dhttps%253A%252F%252Fwww.thegioididong.com%252Ffafbbb757083d%26relation%3Dparent.parent&container_width=0&href=https%3A%2F%2Fwww.thegioididong.com%2Fmay-tinh-bang%2Fhuawei-matepad-t8&layout=button_count&locale=vi_VN&sdk=joey&share=true&show_faces=true"
+                  style={{
+                    border: "none",
+                    visibility: "visible",
+                    width: 150,
+                    height: 28,
+                  }}
+                  __idm_frm__={627}
+                  className
+                />
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="clr" />
+        <div className="rowdetail">
+          <aside className="picture">
+            <div className="icon-position">
+              <img width={400} height={400} src={getID.id.url} alt="pictures" />
+              <img
+                src="https://cdn.tgdd.vn/ValueIcons/1/Label_01-05.png"
+                className="icon-imgNew cate522"
+                alt="1"
+              />
+            </div>
+            <div className="colorandpic">
+              <ul className="owl-carousel owl-theme tabscolor">
+                <li>
+                  <div>
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/IPhone_11_Product_RED.jpg/800px-IPhone_11_Product_RED.jpg"
+                      className="image"
+                      alt="1"
+                    />
+                  </div>
+                  Xanh Dương
+                </li>
+
+                <li className="item">
+                  <div>
+                    <i className="icontgdd-video" />
+                  </div>
+                  Video
+                </li>
+
+                <li className="item">
+                  <div>
+                    <i className="icontgdd-box" />
+                  </div>
+                  Mở hộp,
+                  <br />
+                  k.mãi
+                </li>
+                <li className="item">
+                  <div>
+                    <i className="icontgdd-360" />
+                  </div>
+                  Hình 360
+                  <br />
+                  độ
+                </li>
+              </ul>
+              <div className="prev hide">
+                <i className="icontgdd-prevthumd" />
+              </div>
+              <div className="next hide">
+                <i className="icontgdd-nextthumd" />
+              </div>
+            </div>
+          </aside>
+          <aside className="price_sale">
+            <div
+              className="h-province dt detail scenario0"
+              data-scenario={0}
+              data-sv="TGDD6-15"
+            >
+              <span>Giá tại</span>
+              <b id="h-provincename" data-provinceid={3} className>
+                Hồ Chí Minh
+              </b>
+              <div className="area_price ">
+                <strong>{getID.id.price}</strong>
+                <span className="hisprice">{getID.id.priceSale}</span>
+                <i>-9%</i>
+                <span />
+              </div>
+
+              <div className="area_promotion   ">
+                <strong data-count={2}>
+                  Khuyến mãi{" "}
+                  <i>Giá và khuyến mãi dự kiến áp dụng đến 23:00 31/01</i>
+                </strong>
+                <div className="infopr">
+                  <span
+                    className="pro613305 "
+                    data-g="WebNote"
+                    data-date="1/31/2021 11:59:00 PM"
+                    data-return
+                    data-fromvalue={0}
+                    data-tovalue={10}
+                  >
+                    Pin sạc dự phòng giảm 30% khi mua kèm.
+                    <a href="https://www.thegioididong.com/tin-tuc/pin-sac-du-phong-uu-dai-1294565">
+                      (click xem chi tiết)
+                    </a>
+                  </span>
                 </div>
-                <div className="clr" />
-                <div className="rowdetail">
-                    <aside className="picture">
-                        <div className="icon-position">
-                            <img width={400} height={400} src={getID.id.url} alt="pictures" />
-                            <img src="https://cdn.tgdd.vn/ValueIcons/1/Label_01-05.png" className="icon-imgNew cate522" alt="1" />
-                        </div>
-                        <div className="colorandpic">
-                            <ul className="owl-carousel owl-theme tabscolor">
-                                <li>
-                                    <div>
-                                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/IPhone_11_Product_RED.jpg/800px-IPhone_11_Product_RED.jpg" className="image" alt="1" />
-                                    </div>
-                            Xanh Dương
-                        </li>
-
-                                <li className="item">
-                                    <div>
-                                        <i className="icontgdd-video" />
-                                    </div>
-                            Video
-                        </li>
-
-                                <li className="item">
-                                    <div>
-                                        <i className="icontgdd-box" />
-                                    </div>
-                            Mở hộp,<br />
-                            k.mãi
-                        </li>
-                                <li className="item">
-                                    <div>
-                                        <i className="icontgdd-360" />
-                                    </div>
-                            Hình 360<br />
-                            độ
-                        </li>
-                            </ul>
-                            <div className="prev hide">
-                                <i className="icontgdd-prevthumd" />
-                            </div>
-                            <div className="next hide">
-                                <i className="icontgdd-nextthumd" />
-                            </div>
-                        </div>
-                    </aside>
-                    <aside className="price_sale">
-                        <div className="h-province dt detail scenario0" data-scenario={0} data-sv="TGDD6-15">
-                            <span>Giá tại</span>
-                            <b id="h-provincename" data-provinceid={3} className>Hồ Chí Minh</b>
-                            <div className="area_price ">
-                                <strong>{getID.id.price}</strong>
-                                <span className="hisprice">{getID.id.priceSale}</span>
-                                <i>-9%</i>
-                                <span />
-                            </div>
-
-                            <div className="area_promotion   ">
-                                <strong data-count={2}>Khuyến mãi <i>Giá và khuyến mãi dự kiến áp dụng đến 23:00 31/01</i></strong>
-                                <div className="infopr">
-                                    <span className="pro613305 " data-g="WebNote" data-date="1/31/2021 11:59:00 PM" data-return data-fromvalue={0} data-tovalue={10}>
-                                        Pin sạc dự phòng giảm 30% khi mua kèm.
-                            <a href="https://www.thegioididong.com/tin-tuc/pin-sac-du-phong-uu-dai-1294565">(click xem chi tiết)</a>
-                                    </span>
-                                </div>
-                                <div className="notechoose" />
-                                <div className="promo_BHX">
-                                    <div className="l1">
-                                        <img src="https://www.thegioididong.com/Content/desktop/images/V4/game/Gift@2x.png" alt="1" />
-                                    </div>
-                                    <div className="l2">
-                                        <span>
-                                            Tặng cho khách lần đầu mua hàng online tại web <a href="https://laptopnct.com/">LaptopNCT.com</a>
-                                        </span>
-                                        <div className="content">
-                                            <p className="first-pap"><strong>100.000đ</strong> để mua đơn hàng Laptop.NCT.com từ <b>10.000.000đ</b></p>
-                                            <p> 2 lần <b>FREEship</b></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="area_order area_orderM">
-                                <Link to="/carts" className="buy_now" onClick={() => addProduct(getID.id)}>
-                                    <b>Đặt hàng</b>
-                                    <span>Giao hàng tận nơi hoặc nhận tại cửa hàng</span>
-                                </Link>
-                                
-                                <Link to="/carts" id="tra-gop"className="buy_repay ">
-                                    <b>Mua trả góp </b>
-                                    <span>Duyệt hồ sơ tại cửa hàng</span>
-                                </Link>
-
-                                <Link to="/carts" className="buy_repay s">
-                                    <b>Trả góp  qua thẻ</b>
-                                    <span>Visa, Master, JCB</span>
-                                </Link>
-                            </div>
-                        </div>
-                    </aside>
-                    <aside className="rightInfo">
-                        <ul className="policy ">
-                            <li className="inpr">
-                                <span>Bộ sản phẩm gồm:
-                                <a href="/banner" className="stdImg">Adapter, Sách hướng dẫn, Cáp Micro USB, Cây lấy sim, Hộp máy</a>
-                                </span>
-                            </li>
-                            <li className="wrpr">
-                                <span>
-                                    Bảo hành chính hãng 3 tháng.
-                        </span>
-                            </li>
-                            <li className="chpr">
-                                Lỗi là đổi mới trong 1 tháng tại thành phố HCM.
-                        <a href="https://laptopnct.com/gioithieu/">Xem chi tiết</a>
-                            </li>
-                        </ul>
-                    </aside>
+                <div className="notechoose" />
+                <div className="promo_BHX">
+                  <div className="l1">
+                    <img
+                      src="https://www.thegioididong.com/Content/desktop/images/V4/game/Gift@2x.png"
+                      alt="1"
+                    />
+                  </div>
+                  <div className="l2">
+                    <span>
+                      Tặng cho khách lần đầu mua hàng online tại web{" "}
+                      <a href="https://laptopnct.com/">LaptopNCT.com</a>
+                    </span>
+                    <div className="content">
+                      <p className="first-pap">
+                        <strong>100.000đ</strong> để mua đơn hàng Laptop.NCT.com
+                        từ <b>10.000.000đ</b>
+                      </p>
+                      <p>
+                        {" "}
+                        2 lần <b>FREEship</b>
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <div className="clr" />
+              </div>
+              <div className="area_order area_orderM">
+                <Link
+                  to="/carts"
+                  className="buy_now"
+                  onClick={() => addProduct(getID.id)}
+                >
+                  <b>Đặt hàng</b>
+                  <span>Giao hàng tận nơi hoặc nhận tại cửa hàng</span>
+                </Link>
 
-                <div className="box_content">
-                    <div className="left_content products_related">
-                        <div className="characteristics">
-                            <h2>Đặc điểm nổi bật của Huawei MatePad T8 (Nền tảng Huawei Mobile Service)</h2>
-                            <div id="owl-detail" className="owl-carousel owl-detail owl-theme" style={{ opacity: 1, display: 'block' }}>
-                                <div className="owl-wrapper-outer autoHeight" style={{ height: 362 }}>
-                                    <div className="owl-wrapper" style={{ width: 10448, left: 0, display: 'block', transition: 'all 0ms ease 0s', transform: 'translate3d(0px, 0px, 0px)' }}>
-                                        <div className="owl-item" style={{ width: 653 }}>
-                                            <div className="item" data-id={95825}>
-                                                <img className="lazyOwl" style={{ display: 'block' }} src="https://cdn.tgdd.vn/Products/Images/522/223131/Slider/huawei-matepad-t8-300520-0912080.jpg" />
-                                                <div className="des">
-                                                    <p>Bộ sản phẩm chuẩn: Adapter, Sách hướng dẫn, Cáp Micro USB, Cây lấy sim, Hộp máy</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <Link to="/carts" id="tra-gop" className="buy_repay ">
+                  <b>Mua trả góp </b>
+                  <span>Duyệt hồ sơ tại cửa hàng</span>
+                </Link>
 
+                <Link to="/carts" className="buy_repay s">
+                  <b>Trả góp qua thẻ</b>
+                  <span>Visa, Master, JCB</span>
+                </Link>
+              </div>
+            </div>
+          </aside>
+          <aside className="rightInfo">
+            <ul className="policy ">
+              <li className="inpr">
+                <span>
+                  Bộ sản phẩm gồm:
+                  <a href="/banner" className="stdImg">
+                    Adapter, Sách hướng dẫn, Cáp Micro USB, Cây lấy sim, Hộp máy
+                  </a>
+                </span>
+              </li>
+              <li className="wrpr">
+                <span>Bảo hành chính hãng 3 tháng.</span>
+              </li>
+              <li className="chpr">
+                Lỗi là đổi mới trong 1 tháng tại thành phố HCM.
+                <a href="https://laptopnct.com/gioithieu/">Xem chi tiết</a>
+              </li>
+            </ul>
+          </aside>
+        </div>
+        <div className="clr" />
 
+        <div className="box_content">
+          <div className="left_content products_related">
+            <div className="characteristics">
+              <h2>
+                Đặc điểm nổi bật của Huawei MatePad T8 (Nền tảng Huawei Mobile
+                Service)
+              </h2>
+              <div
+                id="owl-detail"
+                className="owl-carousel owl-detail owl-theme"
+                style={{ opacity: 1, display: "block" }}
+              >
+                <div
+                  className="owl-wrapper-outer autoHeight"
+                  style={{ height: 362 }}
+                >
+                  <div
+                    className="owl-wrapper"
+                    style={{
+                      width: 10448,
+                      left: 0,
+                      display: "block",
+                      transition: "all 0ms ease 0s",
+                      transform: "translate3d(0px, 0px, 0px)",
+                    }}
+                  >
+                    <div className="owl-item" style={{ width: 653 }}>
+                      <div className="item" data-id={95825}>
+                        <img
+                          className="lazyOwl"
+                          style={{ display: "block" }}
+                          src="https://cdn.tgdd.vn/Products/Images/522/223131/Slider/huawei-matepad-t8-300520-0912080.jpg"
+                        />
+                        <div className="des">
+                          <p>
+                            Bộ sản phẩm chuẩn: Adapter, Sách hướng dẫn, Cáp
+                            Micro USB, Cây lấy sim, Hộp máy
+                          </p>
                         </div>
-                        <div className="boxArticle">
-                            {/* <article className="area_article " style={{ height: 'auto' }}>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="boxArticle">
+              <textarea
+                style={{
+                  width: "90%",
+                  height: "auto",
+                  minHeight: "500px",
+                  border: "none",
+                  padding: "15px 20px",
+                  textAlign: "justify",
+                }}
+              >
+                {getID.id.description}
+              </textarea>
+              {/* <article className="area_article " style={{ height: 'auto' }}>
                             <h2>
                                 <a href="https://www.thegioididong.com/may-tinh-bang/huawei-matepad-t8" target="_blank" title="Máy tính bảng Huawei MatePad T8 tại Thế Giới Di Động" type="Máy tính bảng Huawei MatePad T8 tại Thế Giới Di Động">
                                     Huawei MatePad T8</a>&nbsp;là một trong những mẫu&nbsp;
@@ -251,128 +393,186 @@ function ProductDetail(props) {
                             sử dụng cơ bản và đặc biệt phù hợp cho các bật phụ huynh muốn mua cho con em mình một thiết bị phù hợp để giải trí, học tập nhưng
                                 vẫn có thể kiểm soát một cách hiệu quả.</p>
                         </article> */}
-                        </div>
-
-                        <div className="related">
-                            <section className="homeproductsale" >
-                                <div id="owl-promo" className="owl-promo owl-carousel homepromo item2020  owl-theme">
-                                    <div className="owl-wrapper-outer">
-                                        <div className="owl-warpper" style={{ left: 0, display: 'block', transition: 'all 0ms ease 0s', transform: 'translate3d(0px, 0px, 0px)' }}>
-                                            
-                                            <li className="owl-item">
-                                                <div className="item">
-                                                    <Link to={"/product-detail/" + to_slug(getID.id.title) + "." + getID.id.id}
-                                                        className="vertion2020 large"
-                                                    >
-                                                        <div className="heightlabel">Trả góp 0%</div>
-
-                                                        {/* carts */}
-                                                        <Link to="/carts" className="item-carts">
-                                                            <i className="fas fa-cart-plus"></i>
-                                                        </Link>
-                                                        <img
-                                                            width={180}
-                                                            height={180}
-                                                            src={getID.id.url}
-                                                            className="lazyloaded"
-                                                            alt={getID.id.picAlt}
-                                                        />
-                                                        <div className="result-label sale">
-                                                            <i className="roundy">%</i>
-                                                            <span className="text">Giảm sốc</span>
-                                                        </div>
-                                                        <label className="preorder"> {getID.id.preorder}</label>
-                                                        <h3>{getID.id.item_Title} </h3>
-                                                        <div className="props">
-                                                            <span className="dotted  ">Ram {getID.id.ram}GB</span>
-                                                            <span className="dotted  ">Ssd {getID.id.ssd}GB</span>
-                                                            <span className="dotted  ">Core {getID.id.core}</span>
-                                                            <span className="dotted  ">Pin {getID.id.pin}H</span>
-                                                        </div>
-                                                        <h6 className="textkm">{getID.id.textkm} </h6>
-                                                        <div className="price">
-                                                            <strong>{getID.id.price}đ</strong>
-                                                            <span>{getID.id.priceSale}đ</span>
-                                                            <i>{getID.id.sale}%</i>
-                                                        </div>
-                                                        <div className="promo noimage">
-                                                            <p>{getID.id.textBouns}</p>
-                                                        </div>
-                                                        <div className="ratingresult">
-                                                            <i className="icontgdd-ystar" />
-                                                            <i className="icontgdd-ystar" />
-                                                            <i className="icontgdd-ystar" />
-                                                            <i className="icontgdd-ystar" />
-                                                            <i className="icontgdd-ystar" />
-                                                            <span>{getID.id.review} đánh giá</span>
-                                                        </div>
-                                                        <img
-                                                            src="https://cdn.tgdd.vn/ValueIcons/1/Label_01-05.png"
-                                                            className="icon-imgNew cate42 left lazyloaded"
-                                                        />
-                                                    </Link>
-                                                </div>
-                                            </li>
-                                        </div>
-                                        <div className="clr" />
-                                        <div className="owl-controls clickable">
-                                            <div className="owl-buttons">
-                                                <div className="owl-prev">&lt;</div>
-                                                <div className="owl-next">&gt;</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                        </div>
-
-                    </div>
-                    <div className="right_content">
-                        <div className="tableparameter">
-                            <h2>Thông số kỹ thuật</h2>
-                            <ul className="parameter ">
-                                    
-                                <div>
-                                    <li className="p223131 g2439_2440"><span>CPU:</span>
-                                        <div><a href="#" target="_blank"></a>{getID.id.cpuDetail}</div>
-                                    </li>
-                                    <li className="p223131 g2477"><span>RAM:</span><div>{getID.id.ramDetail}</div>
-                                    </li>
-                                    <li className="p223131 g5039"><span>Ổ cứng:</span><div>{getID.id.ssdDetail}</div>
-                                    </li>
-                                    <li className="p223131 g3059"><span>Màn hình:</span><div>{getID.id.lcdDetail}</div>
-                                    </li>
-                                    <li className="p223131 g3060"><span>Card màn hình:</span><div>{getID.id.vgaDetail}</div>
-                                    </li>
-                                    <li className="p223131 g2445"><span>Cổng kết nối:</span><div>{getID.id.inputDetail}</div>
-                                    </li>
-                                    <li className="p223131 g2444"><span>Hệ điều hành:</span><div>{getID.id.winDetail}</div>
-                                    </li>
-                                    <li className="p223131 g25459"><span>Thiết kế:</span>
-                                        <div><a href="#" target="_blank"></a>{getID.id.settingDetail}</div>
-                                    </li>
-                                    <li className="g2460"><span>Kích thước:</span>
-                                        <div className="isim">
-                                            <a href="#" target="_blank">
-                                            </a>{getID.id.sizeDetail}</div>
-                                        <div className="ibsim"><b className="h">Nặng</b>
-                                            <a href="#">2 Ký</a>
-                                        </div>
-                                    </li>
-                                    <li className="p223131 g7839"><span>Thời điểm ra mắt:</span><div>{getID.id.years}</div>
-                                    </li>
-                                </div>
-
-                            </ul>
-                            <button type="button" className="viewparameterfull" onclick="getFullSpec(223131,)">Xem thêm cấu hình chi tiết</button>
-                        </div>
-                    </div>
-                    <div className="clr"></div>
-                </div>
-
             </div>
-        </section>
-    );
+
+            <div className="related">
+              <section className="homeproductsale">
+                <div
+                  id="owl-promo"
+                  className="owl-promo owl-carousel homepromo item2020  owl-theme"
+                >
+                  <div className="owl-wrapper-outer">
+                    <div
+                      className="owl-warpper"
+                      style={{
+                        left: 0,
+                        display: "block",
+                        transition: "all 0ms ease 0s",
+                        transform: "translate3d(0px, 0px, 0px)",
+                      }}
+                    >
+                      <li className="owl-item">
+                        <div className="item">
+                          <Link
+                            to={
+                              "/product-detail/" +
+                              to_slug(getID.id.name) +
+                              "." +
+                              getID.id.id
+                            }
+                            className="vertion2020 large"
+                          >
+                            <div className="heightlabel">Trả góp 0%</div>
+
+                            {/* carts */}
+                            <Link to="/carts" className="item-carts">
+                              <i className="fas fa-cart-plus"></i>
+                            </Link>
+                            <img
+                              width={180}
+                              height={180}
+                              src={getID.id.url}
+                              className="lazyloaded"
+                              alt={getID.id.picAlt}
+                            />
+                            <div className="result-label sale">
+                              <i className="roundy">%</i>
+                              <span className="text">Giảm sốc</span>
+                            </div>
+                            <label className="preorder">
+                              {" "}
+                              {getID.id.preorder}
+                            </label>
+                            <h3>{getID.id.item_Title} </h3>
+                            <div className="props">
+                              <span className="dotted  ">
+                                Ram {getID.id.ram}GB
+                              </span>
+                              <span className="dotted  ">
+                                Ssd {getID.id.ssd}GB
+                              </span>
+                              <span className="dotted  ">
+                                Core {getID.id.core}
+                              </span>
+                              <span className="dotted  ">
+                                Pin {getID.id.pin}H
+                              </span>
+                            </div>
+                            <h6 className="textkm">{getID.id.textkm} </h6>
+                            <div className="price">
+                              <strong>{getID.id.price}đ</strong>
+                              <span>{getID.id.priceSale}đ</span>
+                              <i>{getID.id.sale}%</i>
+                            </div>
+                            <div className="promo noimage">
+                              <p>{getID.id.textBouns}</p>
+                            </div>
+                            <div className="ratingresult">
+                              <i className="icontgdd-ystar" />
+                              <i className="icontgdd-ystar" />
+                              <i className="icontgdd-ystar" />
+                              <i className="icontgdd-ystar" />
+                              <i className="icontgdd-ystar" />
+                              <span>{getID.id.review} đánh giá</span>
+                            </div>
+                            <img
+                              src="https://cdn.tgdd.vn/ValueIcons/1/Label_01-05.png"
+                              className="icon-imgNew cate42 left lazyloaded"
+                            />
+                          </Link>
+                        </div>
+                      </li>
+                    </div>
+                    <div className="clr" />
+                    <div className="owl-controls clickable">
+                      <div className="owl-buttons">
+                        <div className="owl-prev">&lt;</div>
+                        <div className="owl-next">&gt;</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+            {/* end related */}
+            {/* comment */}
+            <Comment ID={getID.id.id}/>
+            {/* end comment */}
+          </div>
+          <div className="right_content">
+            <div className="tableparameter">
+              <h2>Thông số kỹ thuật</h2>
+              <ul className="parameter ">
+                <div>
+                  <li className="p223131 g2439_2440">
+                    <span>CPU:</span>
+                    <div>
+                      <a href="#" target="_blank"></a>
+                      {getID.id.cpuDetail}
+                    </div>
+                  </li>
+                  <li className="p223131 g2477">
+                    <span>RAM:</span>
+                    <div>{getID.id.ramDetail}</div>
+                  </li>
+                  <li className="p223131 g5039">
+                    <span>Ổ cứng:</span>
+                    <div>{getID.id.ssdDetail}</div>
+                  </li>
+                  <li className="p223131 g3059">
+                    <span>Màn hình:</span>
+                    <div>{getID.id.lcdDetail}</div>
+                  </li>
+                  <li className="p223131 g3060">
+                    <span>Card màn hình:</span>
+                    <div>{getID.id.vgaDetail}</div>
+                  </li>
+                  <li className="p223131 g2445">
+                    <span>Cổng kết nối:</span>
+                    <div>{getID.id.inputDetail}</div>
+                  </li>
+                  <li className="p223131 g2444">
+                    <span>Hệ điều hành:</span>
+                    <div>{getID.id.winDetail}</div>
+                  </li>
+                  <li className="p223131 g25459">
+                    <span>Thiết kế:</span>
+                    <div>
+                      <a href="#" target="_blank"></a>
+                      {getID.id.settingDetail}
+                    </div>
+                  </li>
+                  <li className="g2460">
+                    <span>Kích thước:</span>
+                    <div className="isim">
+                      <a href="#" target="_blank"></a>
+                      {getID.id.sizeDetail}
+                    </div>
+                    <div className="ibsim">
+                      <b className="h">Nặng</b>
+                      <a href="#">2 Ký</a>
+                    </div>
+                  </li>
+                  <li className="p223131 g7839">
+                    <span>Thời điểm ra mắt:</span>
+                    <div>{getID.id.years}</div>
+                  </li>
+                </div>
+              </ul>
+              <button
+                type="button"
+                className="viewparameterfull"
+                onclick="getFullSpec(223131,)"
+              >
+                Xem thêm cấu hình chi tiết
+              </button>
+            </div>
+          </div>
+          <div className="clr"></div>
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export default ProductDetail;

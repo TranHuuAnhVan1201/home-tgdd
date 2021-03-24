@@ -1,53 +1,76 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import './ProductDefault.scss';
-import *as actions from '../../../../../../../actions/custommer/products/Product';
-function convertToSlug(slug) {
-    return slug
-        .toLowerCase()
-        .replace(/ /g, '-')
-        .replace(/[^\w-]+/g, '')
-        ;
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import "./ProductDefault.scss";
+import * as actions from "../../../../../../../_actions/custommer/products/product";
+function to_slug(str) {
+  // Chuyển hết sang chữ thường
+  if (str) {
+    str = str.toLowerCase();
+
+    // xóa dấu
+    str = str.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/g, "a");
+    str = str.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/g, "e");
+    str = str.replace(/(ì|í|ị|ỉ|ĩ)/g, "i");
+    str = str.replace(/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/g, "o");
+    str = str.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/g, "u");
+    str = str.replace(/(ỳ|ý|ỵ|ỷ|ỹ)/g, "y");
+    str = str.replace(/(đ)/g, "d");
+
+    // Xóa ký tự đặc biệt
+    str = str.replace(/([^0-9a-z-\s])/g, "");
+
+    // Xóa khoảng trắng thay bằng ký tự -
+    str = str.replace(/(\s+)/g, "-");
+
+    // xóa phần dự - ở đầu
+    str = str.replace(/^-+/g, "");
+
+    // xóa phần dư - ở cuối
+    str = str.replace(/-+$/g, "");
+
+    // return
+    return str;
+  }
 }
 
 function HomeProduct(props) {
-    const databaseRedux = useSelector(state => state.GetProduct);
-    const dispatch = useDispatch();
-    useEffect(() => {
-        onGetProduct();
-    }, []);
-    const onGetProduct = () => {
-        dispatch(actions.getProduct());
-    }
-    const addProduct = (item) => {
-        dispatch(actions.addProductToCart(item));
-    }
-    const getIDName = (item) => {
-        dispatch(actions.IDName(item));
-    }
-    
-   
-    return (
-      <div className="home-product">
-        <div className="product-top">
-          <section className="homeproductsale product-star">
-            <div
-              id="owl-promo"
-              className="owl-promo owl-carousel homepromo item2020  owl-theme"
-            >
-              <div className="owl-wrapper-outer">
-                <div
-                  className="owl-warpper"
-                  style={{
-                    left: 0,
-                    display: "block",
-                    transition: "all 0ms ease 0s",
-                    transform: "translate3d(0px, 0px, 0px)",
-                  }}
-                >
-                  {databaseRedux.map((value, key) => {
-                    if (databaseRedux) {
+  const database = useSelector((state) => state.LoadProduct);
+  console.log(database);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(actions.actLoadProductListRequest());
+  }, []);
+
+  const addProduct = (item) => {
+    dispatch(actions.addProductToCart(item));
+  };
+  const getIDName = (item) => {
+    dispatch(actions.IDName(item));
+  };
+
+  return (
+    <div className="home-product">
+      <div className="product-top">
+        <section className="homeproductsale product-star">
+          <div
+            id="owl-promo"
+            className="owl-promo owl-carousel homepromo item2020  owl-theme"
+          >
+            <div className="owl-wrapper-outer">
+              <div
+                className="owl-warpper"
+                style={{
+                  left: 0,
+                  display: "block",
+                  transition: "all 0ms ease 0s",
+                  transform: "translate3d(0px, 0px, 0px)",
+                }}
+              >
+                {database.length !== 0 ||
+                database.length === undefined ||
+                database !== null
+                  ? database.map((value, key) => {
                       return (
                         <li
                           className={
@@ -60,7 +83,7 @@ function HomeProduct(props) {
                             <Link
                               to={
                                 "/product-detail/" +
-                                convertToSlug(value.title) +
+                                to_slug(value.name) +
                                 "." +
                                 value.id
                               }
@@ -95,7 +118,7 @@ function HomeProduct(props) {
                                   {" "}
                                   {value.preorder}
                                 </label>
-                                <h3>{value.title}</h3>
+                                <h3>{value.name}</h3>
                                 <div className="props">
                                   <span className="dotted  ">
                                     Ram {value.ram} GB
@@ -144,22 +167,22 @@ function HomeProduct(props) {
                           </div>
                         </li>
                       );
-                    }
-                  })}
-                </div>
-                <div className="clr" />
-                <div className="owl-controls clickable">
-                  <div className="owl-buttons">
-                    <div className="owl-prev">&lt;</div>
-                    <div className="owl-next">&gt;</div>
-                  </div>
+                    })
+                  : null}
+              </div>
+              <div className="clr" />
+              <div className="owl-controls clickable">
+                <div className="owl-buttons">
+                  <div className="owl-prev">&lt;</div>
+                  <div className="owl-next">&gt;</div>
                 </div>
               </div>
             </div>
-          </section>
-        </div>
+          </div>
+        </section>
       </div>
-    );
+    </div>
+  );
 }
 
 export default HomeProduct;

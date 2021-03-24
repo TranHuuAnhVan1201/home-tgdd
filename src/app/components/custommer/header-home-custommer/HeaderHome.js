@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import "./scss/Header.scss";
+import "./Header.scss";
 import { useSelector } from "react-redux";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
 import Search from "../body/page-search/search-product/Search";
+// import Search from "../body/page-search/search-product/Search";
 
-
-function Header(props) {
+function HeaderHome(props) {
   const storeGetCart = useSelector((state) => state.GetCarts);
   const [role, setRole] = useState(null);
   const [inputs, setInputs] = useState({
@@ -19,7 +19,6 @@ function Header(props) {
       var decoded = jwtDecode(localStorage.getItem("token"));
       setRole(decoded.role);
     }
-   
   }, []);
   const onLogout = () => {
     localStorage.removeItem("token");
@@ -28,34 +27,32 @@ function Header(props) {
   };
   const handleChange = (event) => {
     const { name, value } = event.target;
-      setInputs((inputs) => ({ ...inputs, [name]: value }));
-      
+    setInputs((inputs) => ({ ...inputs, [name]: value }));
   };
 
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      axios.post(`http://localhost:4333/product/searchnull`, inputs).then(
-        (res) => {
-          console.log("hanldeSearch success");
-          console.log(res);
-          if (window.location.href !== "http://localhost:4200/#/search") {
-            history.push("/search");
-          }
-
-          <Search data={res.data} data2={ 2 } />;
-         
-        },
-        (err) => {
-          console.log(err);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    axios.post(`http://localhost:4333/product/searchnull`, inputs).then(
+      (res) => {
+        console.log("hanldeSearch success");
+        console.log(res);
+        if (window.location.href !== "http://localhost:4200/#/search") {
+          history.push("/search");
         }
-      );
-    };
+
+        <Search data={res.data} data2={2} />;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  };
   return (
     <header>
       <div className="wrap-main">
         <nav>
           <li className="logo">
-            <Link to="/">LaptopNCT</Link>
+            <Link to="/">LaptopTHAV</Link>
           </li>
           <form id="search-site" onSubmit={handleSubmit}>
             <input
@@ -75,15 +72,15 @@ function Header(props) {
           <div className="menu-info">
             <li className="carts" id="carts">
               <Link to="/carts">
-                <i className="roundy">{storeGetCart.numberCart}</i>
+                <i className="roundy">{0}</i>
                 <span>Giỏ hàng</span>
               </Link>
             </li>
             <div className="menu-right">
               <li>
-                <a href="https://youtu.be/jlXMtRMsnwo">Sử dụng website</a>
+                <Link to="/about">Về chúng tôi</Link>
               </li>
-              {/* <li>
+              <li>
                 <Link to="/policy">Bảo hành</Link>
               </li>
               <li>
@@ -94,7 +91,7 @@ function Header(props) {
               </li>
               <li>
                 <Link to="/new">Tin tức</Link>
-              </li> */}
+              </li>
               <li>
                 {" "}
                 {role ? (
@@ -161,4 +158,4 @@ function Header(props) {
   );
 }
 
-export default Header;
+export default HeaderHome;
