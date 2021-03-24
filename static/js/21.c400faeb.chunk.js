@@ -1,0 +1,2 @@
+(this.webpackJsonpprouducts=this.webpackJsonpprouducts||[]).push([[21],{81:function(t,c,o){"use strict";o.r(c);var e=o(3);o(0);c.default=function(t){var c=t.data,o=t.data2;return console.log(c),console.log(o),Object(e.jsx)("div",{children:Object(e.jsx)("h1",{children:"Component Search"})})}}}]);
+//# sourceMappingURL=21.c400faeb.chunk.js.map

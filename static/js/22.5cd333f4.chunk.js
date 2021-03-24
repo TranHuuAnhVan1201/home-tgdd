@@ -1,0 +1,2 @@
+(this.webpackJsonpprouducts=this.webpackJsonpprouducts||[]).push([[22],{116:function(e,n,t){"use strict";t.r(n);var c=t(3),r=t(27),s=t.n(r);t(0);n.default=function(e){var n=s.a.create({baseURL:"https://api-m.sandbox.paypal.com/v2/invoicing/generate-next-invoice-number"});return console.log(n),Object(c.jsx)("div",{children:Object(c.jsx)("h1",{children:"Order"})})}}}]);
+//# sourceMappingURL=22.5cd333f4.chunk.js.map
