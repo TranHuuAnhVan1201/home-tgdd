@@ -1,2 +1,0 @@
-(this.webpackJsonpprouducts=this.webpackJsonpprouducts||[]).push([[10],{102:function(t,c,n){"use strict";n.r(c);var s=n(3);n(0),n(103);c.default=function(t){return Object(s.jsx)("div",{children:Object(s.jsx)("h1",{children:"footer admin"})})}},103:function(t,c,n){}}]);
-//# sourceMappingURL=10.84048144.chunk.js.map

@@ -1,0 +1,2 @@
+(this.webpackJsonpprouducts=this.webpackJsonpprouducts||[]).push([[14],{123:function(e,n,t){"use strict";t.r(n);var c=t(4),s=t(0),u=t.n(s),r=t(17),i=t(2),a=u.a.lazy((function(){return Promise.all([t.e(0),t.e(1),t.e(17)]).then(t.bind(null,116))}));n.default=function(e){return Object(c.jsx)(r.a,{children:Object(c.jsx)(u.a.Suspense,{children:Object(c.jsx)(i.c,{children:Object(c.jsx)(i.a,{path:"/login",component:a})})})})}}}]);
+//# sourceMappingURL=14.3e493c5b.chunk.js.map

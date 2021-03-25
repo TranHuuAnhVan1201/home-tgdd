@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://src/app/components/custommer/body/paypal/PayPal.scss"],"names":[],"mappings":"AAAA,WACI,WAAY,CACZ,aAAc,CACd,WAAY","file":"13.ab24c59c.chunk.css","sourcesContent":[".paypal-av {\r\n    width: 300px;\r\n    display: block;\r\n    margin: auto;\r\n}"]}
