@@ -19,7 +19,7 @@ const loading = (
 );
 
 function App() {
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("admin");
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
